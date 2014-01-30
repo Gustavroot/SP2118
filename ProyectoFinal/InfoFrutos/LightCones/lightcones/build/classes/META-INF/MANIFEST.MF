@@ -1,0 +1,133 @@
+Manifest-Version: 1.0
+Created-By: 1.6.0_04 (Sun Microsystems Inc.)
+Main-Class: WaveFrontApplet
+
+Name: wavefront/AbstractWavefront.class
+SHA1-Digest: IqPYQAq6QgPCT2EPv6YRfhKZIuk=
+
+Name: geometry/P2D.class
+SHA1-Digest: W6gJY+ERwAhmQUR39pzOZSxQ814=
+
+Name: display/CanvasGL$2.class
+SHA1-Digest: AHVcFgZb/A6ZwUy8nYbWixFQK4A=
+
+Name: spacetime/SchwarzschildMetric.class
+SHA1-Digest: 3kBRpvJT1Q+QsaO6J+i/rWwaOwQ=
+
+Name: display/CanvasGL$3.class
+SHA1-Digest: RVlQy4lO1+PLpReoFpAaKp685as=
+
+Name: solver/NumRecRungeKuttaSolver.class
+SHA1-Digest: hdsh0BcLDaTiP7fEg5smWgrN9LU=
+
+Name: solver/NumRecRungeKutta3DSolver.class
+SHA1-Digest: rlPgzwjVO5cA7Ljh8LQHthMLIkc=
+
+Name: spacetime/GoedelMetricTravelguide_0.class
+SHA1-Digest: 6JjSx4OoinGJx2Sm3PBfHBbuOo4=
+
+Name: solver/RungeKuttaSolver.class
+SHA1-Digest: 3RUGGBd8inqh2EXMnXct5vyW/y8=
+
+Name: solver/AbstractSolver.class
+SHA1-Digest: 39d/zGG/1QknTyCnEKPChtOhL2Q=
+
+Name: geometry/P3D.class
+SHA1-Digest: qUE+hDCotZEhI72qkixhYRJNBw0=
+
+Name: geometry/VnD.class
+SHA1-Digest: xQZ4RXu4++zP9/CfaGuTmQjVoFg=
+
+Name: WaveFrontApplet$8.class
+SHA1-Digest: G8DchmE+q4Wk2hC2VmSXyrTYG3U=
+
+Name: spacetime/TypesSpacetime.class
+SHA1-Digest: AagIICsOYQyRToHgGE/PrMNTOGg=
+
+Name: geometry/TransCoordinates.class
+SHA1-Digest: 9wC9CeR//C71ndWxNLUdknJ2v+w=
+
+Name: WaveFrontApplet.class
+SHA1-Digest: b76PVfFnGd6V53neS/GIVkpEwwQ=
+
+Name: geometry/V3D.class
+SHA1-Digest: iYiUxg7ezqL2yepv6NXuDvZuAe0=
+
+Name: geometry/V4D.class
+SHA1-Digest: 43lko2eqw/YTjiaE3oT704V7oMY=
+
+Name: WaveFrontApplet$7.class
+SHA1-Digest: wbQzmzx3jKFyHev8bfBS/g8pgeA=
+
+Name: wavefront/LinesWavefront.class
+SHA1-Digest: DhoT6R5YocP5uPjuSKydGU5B7YE=
+
+Name: WaveFrontApplet$4.class
+SHA1-Digest: s8M3DTl22hSLRgSeIKAZUcjMwNE=
+
+Name: display/CanvasSimple.class
+SHA1-Digest: cBdjWzFTB13r71lH7ysLXsbdC3E=
+
+Name: spacetime/MinkowskiMetric.class
+SHA1-Digest: fohFyoCtDJsl0YJwgyo5rguAY1c=
+
+Name: geometry/CoordsGeometry.class
+SHA1-Digest: nTVH2+VKzuZZYuUHQUWrNB8ArLA=
+
+Name: WaveFrontApplet$6.class
+SHA1-Digest: GK6tVEn4BuZPrq85iYCsPZFkymU=
+
+Name: geometry/RotMat3D.class
+SHA1-Digest: ky2UldJndeeIeGOlBXhXsEarGbg=
+
+Name: geometry/Spline.class
+SHA1-Digest: nQWdfKC/qa5QTEnCtTLHn7Si24M=
+
+Name: solver/TypesSolver.class
+SHA1-Digest: 4HTQaVPjKQgNRUaLYHaKI35NxIE=
+
+Name: spacetime/AbstractMetric.class
+SHA1-Digest: 02SoFySFuYbfqsaIFOTe9aJrdLA=
+
+Name: geometry/PnD.class
+SHA1-Digest: HIIkcLZQ6Fc4tTAdfNYRV4MUejc=
+
+Name: display/CanvasGL.class
+SHA1-Digest: bl0bWzy7i8+rwIP9IxTFRmhtMU8=
+
+Name: spacetime/DeSitterMetric.class
+SHA1-Digest: AEn95+0Ozd6L8XTqfd9BkCA3E54=
+
+Name: WaveFrontApplet$2.class
+SHA1-Digest: NfybYeqq2yhHie6A3Q3JobU3E3Q=
+
+Name: solver/ConstantsSolver.class
+SHA1-Digest: XgL1SE+dXHIcwyYqRGtpmLmfsXI=
+
+Name: geometry/P4D.class
+SHA1-Digest: BLJ1RULCcAzoOI0pKwoGBFj2nEs=
+
+Name: spacetime/KerrMetric.class
+SHA1-Digest: zWbnUUqbV4U9me7kn5lb9xfLj5o=
+
+Name: WaveFrontApplet$5.class
+SHA1-Digest: jRVVAxPTE14+hN8fTZKf945jSq8=
+
+Name: spacetime/GoedelMetric.class
+SHA1-Digest: 9kqb26gGzhzGcCuZeWFB7QuAP/w=
+
+Name: WaveFrontApplet$1.class
+SHA1-Digest: d3WDMuuAfE7QVkMPnvJAxa1GPQU=
+
+Name: display/CanvasGL$1.class
+SHA1-Digest: 0XHxCBJcs6iNkoPMDSPDuKgArk4=
+
+Name: WaveFrontApplet$3.class
+SHA1-Digest: JI5eiufBEmxHr1uuSts5ZLbafX8=
+
+Name: geometry/ConstantsGeometry.class
+SHA1-Digest: 6avhGzgMDjTit4RhT60On0vA+qM=
+
+Name: WaveFrontApplet$9.class
+SHA1-Digest: /pMEfooNlAIzDQoC6tkb/wIEeqQ=
+

@@ -1,0 +1,6 @@
+
+*1:ERROR:syntaxfile not found, error arg -syntax:null/Java2C.zbnf
+EXCEPTION: Uncatched Exception on main level:  null
+java.lang.NullPointerException
+	at org.vishia.java2C.Java2C_Main.execute(Java2C_Main.java:693)
+	at org.vishia.java2C.Java2C.main(Java2C.java:77)
