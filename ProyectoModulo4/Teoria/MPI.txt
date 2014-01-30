@@ -1,0 +1,2 @@
+MPI_AllScatter()
+MPI_AllGather()

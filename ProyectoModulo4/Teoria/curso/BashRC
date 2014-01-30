@@ -1,0 +1,10 @@
+Copiar en $HMOE/.bashrc
+
+# User specific aliases and functions
+alias mpicc.openmpi='/usr/lib64/openmpi/bin/mpicc'
+alias mpiexec.openmpi='/usr/lib64/openmpi/bin/mpiexec'
+alias mpicxx.openmpi='/usr/lib64/openmpi/bin/mpicxx'
+alias mpiCC.openmpi='/usr/lib64/openmpi/bin/mpiCC'
+
+#Stack size
+ulimit -s unlimited

@@ -1,0 +1,2 @@
+Tengo un (BUEN) generador de numeros aleatorios.
+Aproximo lo resultante a una distribucion normal, y luego hago uso de las propiedades de la distribucion normal para obtener ciertos resultados.

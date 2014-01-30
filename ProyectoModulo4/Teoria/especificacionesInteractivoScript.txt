@@ -1,0 +1,7 @@
+cola:xeon nodo:cadejos-0.cnca tiempo:2:00:00
+./interactivo.sh xeon cadejos-0.cnca 2:00:00
+2 procesadores Xeon Quad-core, no utilizar mas de 8 procesos MPI.
+Si se ponen 16 procesos, se comienzan a pelear la cache. (poner a prueba esto tambien)
+32 GB RAM
+Una vez conectado al server, con ssh gramirez@163.178.80.34, con clave gramirez, se conecta directamente a mi home, en ../ esta el home general, y en ../curso/ esta el material y presentaciones y programas del curso.
+Los programas empleados para el curso fueron Hola.c y PVM.c, y este ultimo es el que hay que utilizar para el proyecto de Modulo.

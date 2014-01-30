@@ -1,0 +1,167 @@
+less
+head
+tail
+>
+>>
+ls -lisa
+ls -lisa >> ls.txt
+ls -lisa 1> ls.txt
+ls -lisa;afslkasdfjfsad 1> out 2> err
+ls | wc -w
+ls | tee file.txt
+echo "1 2" | program.c
+La terminal es entrada estandar... recordar ejemplo (de suma) que lleva a problemas por recibir desde salida estandar.
+fdisk -l (superuser)
+echo $PATH
+export VAR=valor (con export me deja creada la variable para todas las futuras sesiones shell)
+echo /home/$USER
+export PATH=$PATH:/home/gustavo/otroBin (para concatenar)
+find / -name "STRING"
+date +%s
+
+grep ^root /etc/passwd (el techo indica que la linea debe iniciar con la expresion regular)
+grep -v a.out
+
+uname -a
+3.8.0-19-generic (version de mi kernel)
+aptitude search kernel
+uname -r
+aptitude search kernel-'uname -r' (anti-tildes)
+
+FAT es muy susceptible, poco eficiente... precisamente por ser una tabla ordenada, quedan espacios vacios (hay que desfragmentar).
+FAT32 es porque tira de 32 en 32.
+
+En linux se utiliza EXT. Hay un subsistema que escribe en forma acomodada.
+
+Los enlaces simbolicos son muy utiles cuando se tienen varias versiones de un mismo programa instaladas.
+Buscar mas sobre find.
+Utilizar rutas absolutas, preferiblemente, al crear enlaces simbolicos.
+
+El archivo /proc/meminfo es muy util.
+Desde /proc se puede encender o apagar camara, por ejemplo.
+/proc/sys/kernel
+
+id
+which PROGRAM
+
+fdisk me dice cuales dispositivos fisicos tengo.
+mount me dice cuales tengo montados.
+
+ifconfig
+
+ifdown eth0
+ifup eth0 (probablemente no levante todo lo que bajo ifdown)
+ping
+
+service network status
+
+route
+route -n
+
+ps
+ps aux
+
+yes
+ps aux | grep yes
+kill #
+kill -9 # (lo mata a la fuerza)
+
+yes asdf &
+CTRL-z y luego bg, para pasar un proceso al background... luego se puede utilizar fg.
+
+time PROGRAM (para tomar el tiempo que tarda un comando o programa en ejecutarse)
+
+history (me lista los comandos que he utilizado en la terminal)
+
+EMPAQUETADO Y DESEMPAQUETADO
+tar cvf a.tar a* (este no comprime, este si: tar -zcvf)
+tar xvf a.tar
+
+zip a.zip *.txt
+unzip ARCHIVO_COMPRIMIDO
+
+ssh gramirez@163.178.80.34 (password: gramirez)
+ssh gramirez@163.178.80.34 -X (con esto despliega el sistema de ventanas en la compu)
+
+leafpad (mas facil usar gedit, una vez que se le dio -X al ssh)
+
+scp gustavo@163.178.80.34:/home/gustavo/helloworld.c (para copiar un archivo desde el server remoto)
+
+ssh tiene un protocolo de FTP asociado
+sftp gustavo@163.178.80.34
+Una vez adentro, se puede usar un get ARCHIVOS, para copiar esos archivos a la compu local, y con put puedo subir los archivos desde la compu local al server remoto.
+
+ftp localhost (aunque no tiene mucho sentido)
+
+PROGRAMMING IN BASH
+a=1
+b=2
+echo $1
+expr $a+$b
+if [ $a -eq 1 ]; then echo SI; else echo NO; fi
+for i in 1 2 3; do echo $i; done
+for i in 1 2 3; do expr $i \* $i; done
+for i in 1 2 3; do ./a.out $i 'expr $i \* 10'; done (comillas antitildes)
+for i in 1 2 3; do echo ./a.out $i 'expr $i \* 10'; done (comillas antitildes)
+for i in 1 2 3; do ./a.out $i 'expr $i \* 10'; done > resultados.txt (comillas antitildes)
+for i in 1 2 3; do echo "Procesando i=$i"; ./a.out $i 'expr $i \* 10'; done > resultados.txt (comillas antitildes)
+
+SCRIPTING
+nano script.sh
+----------------------------------------
+#!/bin/sh
+
+#Comentarios
+
+echo "Digite a y b:"
+
+read a
+read b
+
+for i in 'seq $a $b'; done (comillas antitildes)
+	echo "Calculando i=$i";
+	./a.out $i 'expr $i \* $b' (comillas antitildes)
+	echo "Fin."
+done
+
+echo "Fin del programa."
+---------------------------------------
+
+PERMISSIONS
+owner
+group
+others
+
+chmod a+x script.sh
+chmod a-x script.sh
+
+chmod u+x script.sh
+
+chmod 0777 script.sh
+./script.sh
+
+nano script.sh
+----------------------------------------
+#!/bin/sh
+
+#Comentarios
+
+if [$# -eq 2]; then
+a=$1
+a=$2
+else
+read a
+read b
+fi
+
+for i in 'seq $a $b'; done (comillas antitildes)
+        echo "Calculando i=$i";
+        ./a.out $i 'expr $i \* $b' >> a.dat (comillas antitildes)
+        echo "Fin."
+done
+
+echo "Fin del programa."
+---------------------------------------
+./script.sh 1 5
+
+Aprender gnuplot.
