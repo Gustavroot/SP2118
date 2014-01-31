@@ -65,12 +65,14 @@
 
 
 \section{\normalsize Procedimientos iniciales:}
-Después de haber tomado el código de Francisco Frutos (el cual es parte de su proyecto, JWFront), que está escrito en java, se procedió a instalar \textit{eclipse} para poder trabajar a partir de ese código:
+Después de haber tomado el código de Francisco Frutos (el cual es parte de su proyecto, JWFront), que está escrito en java, se procedió a instalar Eclipse para poder trabajar a partir de ese código:
 \lstset{language=bash}
 \begin{lstlisting}
 $ sudo aptitude install eclipse
 \end{lstlisting}
-Una vez instalado, al abrirlo, se configura el workspace de manera que se tiene un directorio de trabajo para cualquier proyecto a desarrollar. En este caso es solamente un proyecto.
+Una vez instalado, al abrirlo, se configura el workspace de manera que se tiene un directorio de trabajo para cualquier proyecto a desarrollar. En este caso es solamente un proyecto.\\
+Después, se procedió a abrir el programa JWFront con Eclipse.
+
 
 
 
