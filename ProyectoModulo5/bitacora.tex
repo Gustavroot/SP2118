@@ -63,13 +63,108 @@
 El proyecto consiste en el empleo de OpenCV para el estudio de cierto tipo de videos generados a partir de la técnica de física experimental llamada LEED (low-energy electron diffraction), y generar a partir de ellos, en última instancia, una visualización tridimensional de las capas de material que pudieron ser accesadas por las ondas electromagnéticas, y que por lo tanto son las que se pudieron visualizar (hay que tener claro que esta es una visualización a través de modelaje).
 
 
+\section{\normalsize Sobre LEED:}
+
 
 \section{\normalsize Procedimientos iniciales:}
 Para la instalación y puesta en marcha de la biblioteca de Python llamada OpenCV, se hizo uso de la documentación oficial de dicha biblioteca.\footnote{http://docs.opencv.org/trunk/doc/py\_tutorials/py\_tutorials.html}\\
-De dicha documentación oficial, los tutoriales útiles fueron los 3 primeros, a saber: \textit{Introduction to OpenCV}, \textit{Gui features in OpenCV} y \textit{Core operations}.
+De dicha documentación oficial, los tutoriales útiles fueron los 3 primeros, a saber: \textit{Introduction to OpenCV}, \textit{Gui features in OpenCV} y \textit{Core operations}.\\
+Se dará a continuación una descripción general de cada uno de esos tutoriales; principalmente se hará mención de los aspectos más importantes para el desarrollo de este proyecto:
+\subsection{\normalsize \textit{Introduction to OpenCV}}
+Antes que todo, es importante hacer mención de algunas generalidades de OpenCV. OpenCV fue iniciado en Intel, en 1999. OpenCV-Python es el API de Python para OpenCV. Este API hace uso de la capacidad que se tiene en Python de crear \textit{wrappers}, los cuales consisten en código de C o C++, el cual luego se empaqueta y es llamado desde Python. Así, básicamente lo que se hace en OpenCV-Python es un uso directo del API de OpenCV para C++, y se aprovechan además ciertas características importantes de Python.\\
+Un buen conocimiento de Numpy es requerido\footnote{http://wiki.scipy.org/Tentative\_NumPy\_Tutorial}, en caso de que se quiera hacer un uso provechoso (desde el punto de vista de la escritura de códigos optimizados) de OpenCV-Python.\\
+En cuanto a la versión de Python que se utilizará en este proyecto, es la 2.7.4. En Ubuntu (el sistema operativo sobre el cual se desarrolló este programa), Python viene instalado por defecto, así como python-numpy.\\
+Por otro lado, es necesario instalar OpenCV:
+\lstset{language=bash}
+\begin{lstlisting}
+$ sudo aptitude install libopencv-dev
+\end{lstlisting}
+
+Pero una instalación de este tipo no funcionó. Se procedió a desinstalar:
+
+\begin{lstlisting}
+$ sudo aptitude purge libopencv-dev
+\end{lstlisting}
+
+Y después, se optó por la instalación a través del código fuente\footnote{http://stackoverflow.com/questions/15790501/why-cv2-so-missing-after-opencv-installed}. Se descargó la versión 2.4.8\footnote{http://opencv.org/downloads.html}. Luego, en el directorio /home/user/Downloads, se ejecutaron los siguientes comandos:
+
+\begin{lstlisting}
+$ unzip opencv-2.4.8.zip
+$ cd opencv-2.4.8
+$ mkdir release
+$ cd release
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D
+BUILD_NEW_PYTHON_SUPPORT=ON -D BUILD_EXAMPLES=ON ..
+$ make
+$ sudo make install
+\end{lstlisting}
+
+Incluso después de esto, parece ser necesario llevar a cabo un par de instalaciones más:
+
+\begin{lstlisting}
+$ sudo aptitude install python-dev
+$ sudo aptitude install python-opencv
+\end{lstlisting}
+
+Luego, basta con ejecutar en la terminal:
+
+\begin{lstlisting}
+$ python
+\end{lstlisting}
+
+y en el intérprete interactivo de Python que sale a continuación, se escribe:
+
+\begin{lstlisting}
+>> import cv2
+\end{lstlisting}
+
+y si no da error, quiere decir que todo está bien con la instalación de OpenCV.\\
+Además, es importante instalar la siguiente biblioteca de Python (la cual se complementa muy bien con OpenCV, y permite, entre otras cosas, desplegar imágenes y llevar a cabo ciertas operaciones especiales sobre ellas, como por ejemplo aplicar zoom):
+
+\begin{lstlisting}
+$ sudo aptitude install python-matplotlib
+\end{lstlisting}
+
+Pero al ir desarrollando el programa, se fueron presentando problemas en la ejecución (principalmente con el método VideoCapture del objeto cv2). Después de varias búsquedas, se encontró que la solución es hacer una instalación adecuada de ffmpeg\footnote{http://answers.opencv.org/question/263/videocapture-is-not-working-in-opencv-242/}. Así, se llevaron a cabo los siguientes pasos (se descargó la última versión de ffmpeg a través de un repositorio git \footnote{http://www.ffmpeg.org/download.html}):
+
+\begin{lstlisting}
+$ git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+$ sudo aptitude install libfaac-dev
+$ wget http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz?
+r=http%3A%2F%2Fffmpeg.zeranoe.com%2Fforum%2Fviewtopic.php%3Ff%3D5%26t%3D94&ts=133914
+0293&use_mirror=ignum
+$ tar -xvzf lame-3.98.4.tar.gz
+$ cd lame-3.98.4
+$ ./configure
+$ make
+$ sudo make install
+$ sudo aptitude install libopencore-amrwb-dev
+$ sudo aptitude install libopencore-amrnb-dev
+$ sudo aptitude install libtheora-dev
+$ sudo aptitude install libvorbis-dev
+$ sudo aptitude install libx264-dev
+$ sudo aptitude install libxvidcore-dev
+$ sudo aptitude install libxext-dev
+$ sudo aptitude install libxfixes-dev
+$ cd ffmpeg
+$ ./configure --enable-gpl --enable-libfaac --enable-libmp3lame --enable-libopencore
+-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable
+-libx264 --enable-libxvid --enable-nonfree --enable-postproc --enable-version3 --enable
+-x11grab --disable-yasm
+$ make
+$ sudo make install
+\end{lstlisting}
 
 
 
+
+
+
+
+\subsection{\normalsize \textit{Gui features in OpenCV}}
+
+
+\subsection{\normalsize \textit{Core operations}}
 
 
 

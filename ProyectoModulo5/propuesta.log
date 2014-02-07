@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.7.28)  6 FEB 2014 19:00
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.7.28)  6 FEB 2014 20:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -378,7 +378,10 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 LaTeX Warning: Unused global option(s):
     [letter].
 
-No file propuesta.aux.
+(./propuesta.aux
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+)
 \openout1 = `propuesta.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -395,7 +398,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count102
 \scratchdimen=\dimen118
@@ -495,8 +498,8 @@ LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 4390 strings out of 493485
- 59018 string characters out of 3143526
+ 4392 strings out of 493485
+ 59046 string characters out of 3143526
  128594 words of memory out of 3000000
  7654 multiletter control sequences out of 15000+200000
  8262 words of font info for 20 fonts, out of 3000000 for 9000
@@ -506,7 +509,7 @@ Here is how much of TeX's memory you used:
 /fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/
 cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pf
 b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on propuesta.pdf (2 pages, 72306 bytes).
+Output written on propuesta.pdf (2 pages, 67414 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  19 compressed objects within 1 object stream
