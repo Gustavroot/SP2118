@@ -125,7 +125,16 @@ Además, es importante instalar la siguiente biblioteca de Python (la cual se co
 $ sudo aptitude install python-matplotlib
 \end{lstlisting}
 
-Pero al ir desarrollando el programa, se fueron presentando problemas en la ejecución (principalmente con el método VideoCapture del objeto cv2). Después de varias búsquedas, se encontró que la solución es hacer una instalación adecuada de ffmpeg\footnote{http://answers.opencv.org/question/263/videocapture-is-not-working-in-opencv-242/}. Así, se llevaron a cabo los siguientes pasos (se descargó la última versión de ffmpeg a través de un repositorio git \footnote{http://www.ffmpeg.org/download.html}):
+
+
+
+
+
+
+\subsection{\normalsize \textit{Gui features in OpenCV}}
+
+
+Al ir desarrollando el programa, se fueron presentando problemas en la ejecución (principalmente con el método VideoCapture del objeto cv2). Después de varias búsquedas, se encontró que la solución es hacer una instalación adecuada de ffmpeg\footnote{http://answers.opencv.org/question/263/videocapture-is-not-working-in-opencv-242/}. Así, se llevaron a cabo los siguientes pasos (se descargó la última versión de ffmpeg a través de un repositorio git \footnote{http://www.ffmpeg.org/download.html}):
 
 \begin{lstlisting}
 $ git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
@@ -153,15 +162,104 @@ $ ./configure --enable-gpl --enable-libfaac --enable-libmp3lame --enable-libopen
 -x11grab --disable-yasm
 $ make
 $ sudo make install
+$ cd opencv-2.4.8/release
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE ..
+$ make
+$ sudo make install
 \end{lstlisting}
 
+Pero se presentó un error en la recompilación. En específico, el error tiene que ver con: /usr/local/lib/libavcodec.a: could not read symbols: Bad value. La solución se encuentra en línea\footnote{http://www.ozbotz.org/opencv-installation/}. Para poder solucionar todos los errores, se tuvo que desinstalar todo nuevamente y hacer una instalación prácticamente desde cero.
+
+\begin{lstlisting}
+$ sudo aptitude remove ffmpeg x264 libx264-dev
+$ sudo aptitude update
+$ sudo apt-get install build-essential checkinstall git cmake libfaac-dev libjack-
+jackd2-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libsdl1.2-dev 
+libtheora-dev libva-dev libvdpau-dev libvorbis-dev libx11-dev libxfixes-dev
+libxvidcore-dev texi2html yasm zlib1g-dev
+$ sudo apt-get install libgstreamer0.10-0 libgstreamer0.10-dev gstreamer0.10-tools
+gstreamer0.10-plugins-base libgstreamer-plugins-base0.10-dev gstreamer0.10-plugins-
+good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-bad gstreamer0.10-ffmpeg
+$ cd opencv-2.4.8
+$ sudo make uninstall
+\end{lstlisting}
+
+y se optará por trabajar con la versión 2.4.2 de OpenCV:
 
 
+\begin{lstlisting}
+$ sudo apt-get install libgtk2.0-0 libgtk2.0-dev
+$ sudo apt-get install libjpeg8 libjpeg8-dev
+$ mkdir src
+$ cd src
+$ wget ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20120528-2245
+-stable.tar.bz2
+$ tar xvf x264-snapshot-20140206-2245.tar.bz2
+$ cd x264-snapshot-20140206-2245/
+$ ./configure --enable-shared --enable-pic
+$ make
+$ sudo make install
+$ mkdir src0
+$ cd src0
+$ wget http://ffmpeg.org/releases/ffmpeg-0.11.1.tar.bz2
+$ tar xvf ffmpeg-0.11.1.tar.bz2
+$ cd ffmpeg-0.11.1
+$ ./configure --enable-gpl --enable-libfaac --enable-libmp3lame --enable-libopencore
+-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable-libx264
+--enable-libxvid --enable-nonfree --enable-postproc --enable-version3 --enable
+-x11grab --enable-shared --enable-pic
+$ make
+$ sudo make install
+\end{lstlisting}
 
+En algún momento, la instalación se complicó, debido a ciertos llamados inadecuados entre funciones de ciertos archivos, todo esto relacionado con libavcodec y ffmpeg. Se fue al código fuente original de ffmpeg, y se ejecutó en la terminal:
 
+\begin{lstlisting}
+$ sudo make uninstall
+\end{lstlisting}
 
+Los segmentos de línea --enable-shared y --enable-pic son muy importantes, ya que previenen los errores que generaron toda la reinstalación de OpenCV (aquellos de no poder utilizar VideCapture).\\
+Continuando:
 
-\subsection{\normalsize \textit{Gui features in OpenCV}}
+\begin{lstlisting}
+$ wget http://www.linuxtv.org/downloads/v4l-utils/v4l-utils-1.0.1.tar.bz2
+$ tar xvf v4l-utils-1.0.1.tar.bz2
+$ cd v4l-utils-1.0.1
+$ ./configure
+$ make
+$ sudo make install
+\end{lstlisting}
+
+Y finalmente, se hace la instalación de OpenCV versión 2.4.2:
+
+\begin{lstlisting}
+$ wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.2/OpenCV
+-2.4.2.tar.bz2
+$ tar xvf OpenCV-2.4.2.tar.bz2
+$ cd OpenCV-2.4.2/
+$ mkdir build
+$ cd build
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE ..
+$ make
+$ sudo make install
+\end{lstlisting}
+
+Después de la instalación, hay que llevar a cabo algunas configuraciones en linux (para que identifique de manera adecuada todos los elementos de OpenCV):
+
+\begin{lstlisting}
+$ export LD_LIBRARY_PATH=/usr/local/lib
+(agregar este de arriba a .bashrc)
+\end{lstlisting}
+
+Además, hay que agregar las siguientes dos líneas a /etc/bash.bashrc:
+
+\begin{lstlisting}
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+\end{lstlisting}
+
+Y listo! Con estas configuraciones ya es posible hacer uso de OpenCV sin problemas.
+
 
 
 \subsection{\normalsize \textit{Core operations}}

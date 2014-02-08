@@ -1,3 +1,4 @@
 #!/bin/bash
 
-./programa.py LEEDgraphite.wmv
+#echo `ls ../videos/`
+./programa.py `ls ../videos/`
