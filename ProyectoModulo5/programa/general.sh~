@@ -1,0 +1,7 @@
+#!/bin/bash
+
+transformedPath=../videos/transf/
+stringList=`ls $transformedPath`
+arrayList=(${stringList//\ / })
+
+./programa.py `ls ../videos/transf/`

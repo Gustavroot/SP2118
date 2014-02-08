@@ -14,9 +14,9 @@ def funcionDetencionYReanudacion(counter):
 #A esta funcion se le pasara cada uno de los archivos de video, para ser procesado
 def procesado(filename):
     print "Iniciando procesado del archivo %s..." %filename
-    tmpVideo = cv2.VideoCapture('../videos/'+filename)
+    tmpVideo = cv2.VideoCapture(sys.argv[1]+filename)
     tmpRet, tmpFrame=tmpVideo.read()
-    cap = cv2.VideoCapture("../videos/"+filename)
+    cap = cv2.VideoCapture(sys.argv[1]+filename)
     #print cap.get(3)
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
@@ -51,7 +51,7 @@ def procesado(filename):
 
 counter=0
 for elem in sys.argv:
-    if counter>=1:
+    if counter>=2:
         #print sys.argv[counter]
         print counter
         procesado(sys.argv[counter])

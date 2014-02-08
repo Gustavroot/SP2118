@@ -1,3 +1,5 @@
 #!/bin/bash
 
-./programa.py `ls ../videos/transf/`
+transformedPath=../videos/transf/
+
+./programa.py $transformedPath ` ls $transformedPath`
