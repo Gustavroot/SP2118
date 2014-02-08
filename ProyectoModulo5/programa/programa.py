@@ -4,6 +4,13 @@ import numpy as np
 import cv2
 import sys
 
+def funcionDetencionYReanudacion(counter):
+    if cv2.waitKey(200) & 0xFF != ord('q'):
+        counter+=200
+        funcionDetencionYReanudacion(counter)
+    else:
+        print "Reanudado..."
+
 #A esta funcion se le pasara cada uno de los archivos de video, para ser procesado
 def procesado(filename):
     print "Iniciando procesado del archivo %s..." %filename
@@ -23,7 +30,15 @@ def procesado(filename):
         #print np.size(frame, 0)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         cv2.imshow(filename,gray)
-        if cv2.waitKey(15) & 0xFF == ord('q'):
+        keyFinger=cv2.waitKey(15) & 0xFF
+        if keyFinger == ord('q'):
+            #Cuando se presiona la tecla q, se detiene hasta que se vuelva a presionar dicha letra
+            print "Detenido..."
+            funcionDetencionYReanudacion(0)
+            #keyFinger = cv2.waitKey(0) & 0xFF
+            #if keyFinger == ord('q'):
+            #    continue
+        elif keyFinger == ord('s'):
             break
     tmpVideo.release()
     #Buscar una forma de liberar estos dos sin que genere error...!
