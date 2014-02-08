@@ -20,7 +20,7 @@ def procesado(filename):
     #print cap.get(3)
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
-    while(cap.isOpened()):
+    while True:
         ret, frame = cap.read()
         #Setting width and height
         #... pending

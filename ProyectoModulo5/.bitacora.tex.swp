@@ -260,6 +260,14 @@ export PKG_CONFIG_PATH
 
 Y listo! Con estas configuraciones ya es posible hacer uso de OpenCV sin problemas.
 
+Ahora bien, en cuanto tamaño de video, es mejor hacer un reajuste antes de ejecutar el programa. Todos los videos son pasados al mismo tamaño (se ha elegido XxX, de manera levemente arbitraria). La transformación se hace básicamente con el siguiente comando (se agrega aquí con un ejemplo incorporado):
+
+\begin{lstlisting}
+/home/gustavo/Downloads/src0/ffmpeg-0.11.1/ffmpeg -i LEEDgraphite2.wmv -s 640x480
+-b:v 512k -vcodec mpeg1video -acodec copy LEEDtransformed2.wmv
+\end{lstlisting}
+
+Además del archivo llamado 'programa.py', que es el script en Python, llamado a su vez por el script en Bash 'general.py', se hizo un script (también en Bash) para transformar todos los archivos que vayan a estar adentro de 'videos/'.
 
 
 \subsection{\normalsize \textit{Core operations}}

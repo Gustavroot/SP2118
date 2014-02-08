@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./programa.py `ls ../videos/`
+./programa.py `ls ../videos/transf/`
