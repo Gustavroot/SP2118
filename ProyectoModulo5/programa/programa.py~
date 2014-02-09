@@ -53,16 +53,17 @@ def draw_lines(event, x, y, flags, param):
 
     if event == cv2.EVENT_LBUTTONDOWN:
         specificList=[]
-        specificList.append(x)
-        specificList.append(y)
+        bufferArray=[x,y]
+        specificList.append(bufferArray)
         drawing = True
         ix,iy = x,y
     #Arrastrado del mouse
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
-            specificList.append(x)
-            specificList.append(y)
+            bufferArray=[x,y]
+            specificList.append(bufferArray)
             cv2.circle(param,(x,y),5,(0,0,255),-1)
+            #Intento inicial de dibujo de lineas... fallo
             #cv2.line(param,(ix,iy),(x,y),(255,0,0),5)
             #if mode == True:
             #    cv2.rectangle(param,(ix,iy),(x,y),(0,255,0),-1)
@@ -71,8 +72,8 @@ def draw_lines(event, x, y, flags, param):
     #Cuando se suelta el mouse, se detiene el dibujado, y se completa
     #asi una figura cerrada
     elif event == cv2.EVENT_LBUTTONUP:
-        specificList.append(x)
-        specificList.append(y)
+        bufferArray=[x,y]
+        specificList.append(bufferArray)
         drawing = False
         cv2.circle(param,(x,y),1,(0,0,255),-1)
         #if mode == True:
@@ -80,8 +81,14 @@ def draw_lines(event, x, y, flags, param):
         #else:
         #    cv2.circle(param,(x,y),1,(0,0,255),-1)
         generalList.append(specificList)
-        print specificList
-        print generalList
+        #Dibujado de poligono:
+        pts = np.array(specificList, np.int32)
+        pts = pts.reshape((-1,1,2))
+        cv2.polylines(param,[pts],True,(255,0,0))
+
+        #print specificList
+        #print generalList
+        print "Cantidad de lazos dibujados hasta el momento: 1 global mas %d locales" %(len(generalList)-1)
 
     #Este if funcionada para el caso de que se de doble click
     #if event == cv2.EVENT_LBUTTONDBLCLK:
@@ -90,7 +97,7 @@ def draw_lines(event, x, y, flags, param):
 
 #A esta funcion se le pasara cada uno de los archivos de video, para ser procesados
 def procesado(filename):
-    print "Iniciando procesado del archivo %s..." %filename
+    print "\nIniciando procesado del archivo %s..." %filename
     tmpVideo = cv2.VideoCapture(sys.argv[1]+filename)
     tmpRet, tmpFrame=tmpVideo.read()
     cap = cv2.VideoCapture(sys.argv[1]+filename)
@@ -98,6 +105,7 @@ def procesado(filename):
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
     while True:
+        estadoFinal="sin interrumpir"
         ret, frame = cap.read()
         #Setting width and height
         #... pending
@@ -124,20 +132,22 @@ def procesado(filename):
             #if keyFinger == ord('q'):
             #    continue
         elif keyFinger == ord('s'):
+            estadoFinal="interrumpido"
             break
     tmpVideo.release()
     cap.release()
     #Buscar una forma de liberar estos dos sin que genere error...!
     #cap.release()
     #cv2.destroyAllWindows()
-    print "Procesamiento del archivo %s se ha completado." %filename
+    print "Procesamiento del archivo %s se ha completado (%s)." %filename, estadoFinal
 
 
 #Se hace un llamado a procesado, con nombres de archivos de video
 #procesado("LEEDgraphite.wmv")
 
 
-print "\nPROGRAMA PARA EL PROCESADO DE VIDEOS OBTENIDOS A PARTIR DE LEED\n"
+print "\nPROGRAMA PARA EL PROCESADO DE VIDEOS OBTENIDOS A PARTIR DE LEED"
+print "(al dibujar las regiones de conteo, recuerde que la primera es la global, y las siguientes son las relacionadas con curvas de intensidad)\n"
 counter=0
 for elem in sys.argv:
     if counter>=2:
