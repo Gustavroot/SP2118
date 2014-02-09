@@ -13,6 +13,11 @@ ix,iy = -1,-1
 #cada una de las listas internas es un conjunto de puntos,
 #con cada uno de esos conjuntos de puntos se dibujaran poligonos
 #en los frames posteriores al dibujado
+#Esta primera lista es la mas general... contiene un listado con n
+#elementos, 1 por cada video. Cada elemento es un listado de los lazos
+#correspondientes al video correspondiente
+#La lista listadoFilesLazos parece ser completamente innecesaria...
+listadoFilesLazos=[]
 generalList=[]
 specificList=[]
 
@@ -85,7 +90,6 @@ def draw_lines(event, x, y, flags, param):
         pts = np.array(specificList, np.int32)
         pts = pts.reshape((-1,1,2))
         cv2.polylines(param,[pts],True,(255,0,0))
-
         #print specificList
         #print generalList
         print "Cantidad de lazos dibujados hasta el momento: 1 global mas %d locales" %(len(generalList)-1)
@@ -97,6 +101,8 @@ def draw_lines(event, x, y, flags, param):
 
 #A esta funcion se le pasara cada uno de los archivos de video, para ser procesados
 def procesado(filename):
+    global listadoFilesLazos, generalList
+
     print "\nIniciando procesado del archivo %s..." %filename
     tmpVideo = cv2.VideoCapture(sys.argv[1]+filename)
     tmpRet, tmpFrame=tmpVideo.read()
@@ -139,6 +145,8 @@ def procesado(filename):
     #Buscar una forma de liberar estos dos sin que genere error...!
     #cap.release()
     #cv2.destroyAllWindows()
+    listadoFilesLazos.append(generalList)
+    generalList=[]
     print "Procesamiento del archivo %s se ha completado (%s)." % (unicode(filename), unicode(estadoFinal))
 
 
