@@ -14,6 +14,7 @@ ix,iy = -1,-1
 #con cada uno de esos conjuntos de puntos se dibujaran poligonos
 #en los frames posteriores al dibujado
 generalList=[]
+specificList=[]
 
 
 #img = cv2.imread('/home/gustavo/Desktop/Progra_Verano/GITrepo/ProyectoModulo5/testImgs/Blackeyegalaxy.jpg',0)
@@ -46,15 +47,24 @@ def funcionDetencionYReanudacion(counter, filename2, img2):
 
 #Esta funcion es la que se llama al dibujar figuras (poligonos)
 def draw_lines(event, x, y, flags, param):
+    global generalList, specificList
     global ix,iy,drawing#,mode
     #Click inicial
+
     if event == cv2.EVENT_LBUTTONDOWN:
+        specificList=[]
+        specificList.append(x)
+        specificList.append(y)
         drawing = True
         ix,iy = x,y
     #Arrastrado del mouse
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
+            specificList.append(x)
+            specificList.append(y)
             cv2.circle(param,(x,y),5,(0,0,255),-1)
+            #Intento inicial de dibujo de lineas... fallo
+            #cv2.line(param,(ix,iy),(x,y),(255,0,0),5)
             #if mode == True:
             #    cv2.rectangle(param,(ix,iy),(x,y),(0,255,0),-1)
             #else:
@@ -62,12 +72,18 @@ def draw_lines(event, x, y, flags, param):
     #Cuando se suelta el mouse, se detiene el dibujado, y se completa
     #asi una figura cerrada
     elif event == cv2.EVENT_LBUTTONUP:
+        specificList.append(x)
+        specificList.append(y)
         drawing = False
         cv2.circle(param,(x,y),1,(0,0,255),-1)
         #if mode == True:
         #    cv2.rectangle(param,(ix,iy),(x,y),(0,255,0),-1)
         #else:
         #    cv2.circle(param,(x,y),1,(0,0,255),-1)
+        generalList.append(specificList)
+        print specificList
+        print generalList
+
     #Este if funcionada para el caso de que se de doble click
     #if event == cv2.EVENT_LBUTTONDBLCLK:
     #    #print param
