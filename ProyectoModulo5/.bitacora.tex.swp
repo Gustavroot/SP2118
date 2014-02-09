@@ -269,6 +269,17 @@ Ahora bien, en cuanto tamaño de video, es mejor hacer un reajuste antes de ejec
 
 Además del archivo llamado 'programa.py', que es el script en Python, llamado a su vez por el script en Bash 'general.py', se hizo un script (también en Bash) para transformar todos los archivos que vayan a estar adentro de 'videos/'.
 
+Aparte de todo lo mencionado anteriormente, cabe rescatar algunos puntos importantes de esta (segunda) sección de tutoriales.\\
+Los detalles de los scripts mismos se pueden encontrar en ellos, los cuales ya vienen con su correspondiente documentación. De esta sección, es importante mencionar lo siguiente:
+\begin{itemize}
+\item Los son tratables exactamente igual que las imágenes que se leen de archivos .png, .jpg, etc., y se les puede asignar eventos.
+\item El método waitKey(time) resulta ser muy útil, especialmente cuando se quiere detener un video, dibujar sobre él, y luego retomar la reproducción del video en ese punto de detención previo.
+\item La reproducción de videos con OpenCV es trucosa, y hay que tener en cuenta que el último frame al que se accesa (en caso de hacer uso de un while, combinado con el método isOpened del objeto generado a partir del llamado de la función cv2.VideoCapture(str)) no existe, por lo que hay que hacer una validación en ese caso.
+\item La combinación de waitKey(time) y destroyWindow(str), hacen posible una finalización del programa sin problema alguno, a pesar de interrumpirse incluso.
+\item El uso de círculos y polígonos como objetos para dibujo, resulta muy útil en el trazo de lazos cerrados sobre frames. Pero hay que hacer un llamado directo del frame (es decir, pasarlo por parámetro a la función empleada en la implementación del evento) o tenerlo como variable global. Si no se tiene acceso al frame sobre el que se quiere dibujar, es claro que no se podrá dibujar sobre él.
+\item El uso de listas anidadas resulta muy útil, e incluso indispensable, en el redibujado de lazos cerrados sobre los frames posteriores al frame sobre el que se dibujó o dibujaron el o los lazos.
+\item El dibujado de figuras sobre imágenes, así como la implementación de eventos (como click derecho, por ejemplo) en las mismas, resultan las herramientas básicas e indispensables para el uso del mouse como herramienta de dibujo sobre un video.
+\end{itemize}
 
 \subsection{\normalsize \textit{Core operations}}
 
