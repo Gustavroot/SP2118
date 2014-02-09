@@ -2,4 +2,4 @@
 
 transformedPath=../videos/transf/
 
-./programa.py $transformedPath ` ls $transformedPath`
+./programa.py $transformedPath `ls $transformedPath`

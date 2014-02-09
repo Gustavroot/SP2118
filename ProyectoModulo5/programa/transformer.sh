@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Resolucion recomendada: 1280x710, para Acer Aspire 14 pulgadas
+
 #Specify ffmpeg PATH
 ffmpegPATH=/home/gustavo/Downloads/src0/ffmpeg-0.11.1/ffmpeg
 
@@ -25,7 +27,7 @@ do
     else
         echo ""
         echo "Procesando archivo "${arrayList[$counter]}"..."
-        $ffmpegPATH -i $directVideos$fileToProcess -s 640x480 -b:v 512k -vcodec mpeg1video -acodec copy "TRANSFORMED"$fileToProcess
+        $ffmpegPATH -i $directVideos$fileToProcess -s "$@" -b:v 512k -vcodec mpeg1video -acodec copy "TRANSFORMED"$fileToProcess
         mv ./TRANSFORMED$fileToProcess $transformedPath
         #transformedPath
     fi
