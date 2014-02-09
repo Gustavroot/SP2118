@@ -121,6 +121,11 @@ def procesado(filename):
         #print np.size(frame, 0)
         #img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         img = cv2.cvtColor(frame, 0)
+
+        #Dibujado de poligonos... (si es que los hay)
+        for x in generalList:
+            cv2.polylines(img,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
+
         #print type(img)
         #print filename
         cv2.namedWindow(filename)
@@ -148,6 +153,7 @@ def procesado(filename):
     listadoFilesLazos.append(generalList)
     generalList=[]
     print "Procesamiento del archivo %s se ha completado (%s)." % (unicode(filename), unicode(estadoFinal))
+    cv2.destroyWindow(filename)
 
 
 #Se hace un llamado a procesado, con nombres de archivos de video
