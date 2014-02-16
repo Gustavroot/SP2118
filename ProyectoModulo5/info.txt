@@ -1,0 +1,1 @@
+Este proyecto consiste en un estudio de algunas características importantes del ciclo celular, esto a través del uso de un programa computacional.

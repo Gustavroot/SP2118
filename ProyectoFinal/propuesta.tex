@@ -42,48 +42,42 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 \begin{center}
-\entitle{Bitácora de trabajo \\ Gustavo Ramírez Hidalgo \\ Proyecto final - SP2118}
+\entitle{Propuesta \\ Gustavo Ramírez Hidalgo \\ Proyecto final - SP2118}
 \end{center}
 
 
+\section{\normalsize Justificación}
+En la actualidad, con el auge de la computación, todas las ciencias básicas requieren cada día más del uso de programación en tareas específicas, tanto a nivel de simulación (desde el punto de vista teórico) como a nivel de laboratorio (en experimentación, ya sea durante el proceso que se esté llevando a cabo, o después del mismo, llevando a cabo un tratamiento específico de los resultados obtenidos).\\
+Para el caso específico de este proyecto, lo que se desea es ahondar en la física experimental, específicamente en la etapa posterior a la obtención de resultados. En este caso, se hará un tratamiento de algunos particulares obtenidos a través del método llamado LEED (low-energy electron diffraction). El programa a desarrolar aquí es completamente necesario como parte de la etapa final (de interpretación) del proceso de experimentación.
+
+
+\section{\normalsize Metodología}
+Se hará uso de OpenCV en el análisis de los videos proveídos por el laboratorio que lleva a cabo el experimento (LEED, en este caso). Con dicha herramienta computacional, se hará un estudio de las intensidades en diferentes regiones del área de interés (que se llamará de ahora en adelante el área iluminada del video). Para el área iluminada, se generarán curvas de intensidad en el tiempo, definiéndose la intensidad como el porcentaje de pixeles presentes en dicha área.\\
+Además, se generará una imagen dos dimensional, en la cual se hará una ubicación espacial directa de los puntos de iluminación.\\
+Finalmente, se hará un tratamiento sobre esa imagen dos dimensional, para generar a partir de ella (por medio de un tratamiento teórico, una transformación, que se especificará en la documentación misma de este proyecto) una visualización tridimensional de las capas de material que pudieron ser accesadas por las ondas electromagnéticas que incidieron sobre le material.
+
+
+\section{\normalsize Objetivos}
+
+\subsection{\normalsize Objetivo General}
+Implementar un sistema de visualización tridimensional de las capas superiores de un material tratado a través del proceso experimental llamado LEED.
+
+\subsection{\normalsize Objetivos Específicos}
+\begin{itemize}
+\item Obtener curvas de intensidad contra tiempo, para todo el lapso temporal durante el cual es llevado a cabo el proceso experimental llamado LEED.
+\item Generar una imagen dos dimensional, en la cual se visualice la ubicación espacial directa de los puntos de iluminación.
+\item Llevar a cabo, a partir de la imagen dos dimensional de puntos de iluminación, una visualización tridimensional de las capas superiores del material.
+\end{itemize}
 
 
 
+\section{\normalsize Referencias}
 
+\begin{itemize}
+\item OpenCV dev team. 2014. Título: OpenCV-Python Tutorials. Disponible en: \\ http://docs.opencv.org/trunk/doc/py\_tutorials/py\_tutorials.html
+\end{itemize}
 
-\section{\normalsize Procedimientos iniciales:}
-Después de haber tomado el código de Francisco Frutos (el cual es parte de su proyecto, JWFront), que está escrito en java, se procedió a instalar Eclipse para poder trabajar a partir de ese código:
-\lstset{language=bash}
-\begin{lstlisting}
-$ sudo aptitude install eclipse
-\end{lstlisting}
-Una vez instalado, al abrirlo, se configura el workspace de manera que se tiene un directorio de trabajo para cualquier proyecto a desarrollar. En este caso es solamente un proyecto.\\
-Después, se procedió a abrir el programa JWFront con Eclipse.
-
-Con Netbeans:
-
-Se ejecutó el script de bash que venía adentro del directorio LightCones/, de la siguiente manera:
-\lstset{language=bash}
-\begin{lstlisting}
-$ bash netbeans-7.0.1-ml-javase-linux.sh
-\end{lstlisting}
-
-Luego, se procedió a abrir el programa ubicado en LightCones/lightcone\_src/WaveFrontApplet.java, para tratarlo con NetBeans y compilarlo.
-
-Cabe destacar que en la instalación de NetBeans, se instaló además JUnit, un conjunto de bibliotecas creadas por Erich Gamma y Kent Beck que son utilizadas en programación para hacer pruebas unitarias de aplicaciones Java.
 
 \begin{comment}
 \section{\normalsize Introducción:}
