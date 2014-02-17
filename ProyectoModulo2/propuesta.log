@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.7.28)  17 FEB 2014 09:36
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.7.28)  17 FEB 2014 09:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -491,28 +491,39 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 62.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 62.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 62.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 62.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./propuesta.aux
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./propuesta.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 4392 strings out of 493485
- 59046 string characters out of 3143526
- 129594 words of memory out of 3000000
- 7654 multiletter control sequences out of 15000+200000
- 8262 words of font info for 20 fonts, out of 3000000 for 9000
+ 4414 strings out of 493485
+ 59272 string characters out of 3143526
+ 128594 words of memory out of 3000000
+ 7667 multiletter control sequences out of 15000+200000
+ 12383 words of font info for 29 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,5n,32p,1806b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,8n,32p,1806b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf
 /fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/
 cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pf
-b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on propuesta.pdf (2 pages, 68771 bytes).
+b></usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb
+>
+Output written on propuesta.pdf (1 page, 101412 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 37 PDF objects out of 1000 (max. 8388607)
+ 26 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
