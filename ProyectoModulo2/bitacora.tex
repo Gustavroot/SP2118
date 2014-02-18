@@ -59,30 +59,97 @@
 \end{center}
 
 
-\section{\normalsize Descripción general:}
+\section{Descripción general:}
 El proyecto consiste en la resolución de la ecuación de Poisson a través de una implementación del método de diferencias finitas, haciendo uso de herramientas computacionales.\\
-Las herramientas a utilizar son C++, para crear un programa que luego será empaquetado en un módulo para Python. Una vez que se ha trasladado el proceso a Python, se utiliza VPython para la visualización de los resultados.
+Las herramientas a utilizar son C, para crear un programa que luego será empaquetado en un módulo para Python. Una vez que se ha trasladado el proceso a Python, se utiliza VPython para la visualización de los resultados.
 
 
-\section{\normalsize Sobre el método de diferencias finitas:}
+\section{Sobre el método de diferencias finitas:}
+
+\subsection{1 variable...}
+
+A diferencia de métodos como \textit{linear and nonlinear shooting method}\footnote{R. Burden, J. Faires. Numerical Analysis. 9th edition. 2011.}, entre otros, el método de diferencias finitas es basante estable, en general (aunque requieran un poco más de poder computacional que los primeros).
+
+Los métodos de diferencias finitas reemplazan cada una de las derivadas en la ecuación diferencial, con una aproximación de cociente de diferencias adecuada (esto no será tratado en detalle aquí, pero estas aproximaciones son básicamente distintos tipos de aproximaciones que emplean la expansión de Taylor de una función a diferentes órdenes para aproximar funciones y derivadas de distintos órdenes, dependiendo de la grilla que se elija o posea para llevar a cabo los cálculos).
+
+El cociente de diferencias que se elija y el paso de los cálculos numéricos, dependen mucho del error que se desee.
+
+Trabajando con funciones dependientes de 1 variable (este no será el caso a resolver, pues la ecuación de Poisson está definida a través de un problema multivariable), la primera y segunda derivada se aproximan de la siguiente manera:
+
+\begin{center}
+$\displaystyle y'(x_{i})=\frac{1}{2h}[y(x_{i+1})-y(x_{i-1})]-\frac{h^{2}}{6}y'''(\eta_{i})$\\
+$\displaystyle y''(x_{i})=\frac{1}{h^{2}}[y(x_{i+1})-2y(x_{i})+y(x_{i-1})]-\frac{h^{2}}{12}y^{(4)}(\zeta_{i})$
+\end{center}
+
+Las variables independientes en la segunda y cuarta derivada no tienen mucha importancia, pues lo importante ahí es notar que ambos términos están asociados al error. Luego, se toman estas aproximaciones, se insertan en la ED, y luego se hace el cambio:
+
+\begin{center}
+$\displaystyle y(x_{i})\rightarrow w_{i}$
+\end{center}
+
+pudiendo con esto establecer un sistema de ecuaciones lineales (es decir, para resolvelo basta con llevar a cabo la inversión de una matriz).
+
+\subsection{Multivariable...}
+La ecuación diferencial en derivadas parciales que se desea resolver es del tipo Elíptica. La ecuación de Poisson tendrá aquí la siguiente forma:
+
+\begin{center}
+$\displaystyle \nabla^{2}u(x,y)=\frac{\partial^{2}u}{\partial x^{2}}(x,y)+\frac{\partial^{2}u}{\partial y^{2}}(x,y)=f(x,y)$
+\end{center}
+
+la cual estará definida sobre una región $\displaystyle R=\{(x,y) \ | \ a<x<b, c<y<d\}$, con $\displaystyle u(x,y)=g(x,y)$ para $\displaystyle (x,y)\in S$, con $\displaystyle S$ denotando la frontera de $\displaystyle R$. Si $\displaystyle f$ y $\displaystyle g$ son continuas en sus dominios, entonces hay una solución única para esta ED.
+
+Definido el problema de esta forma, y al ser 2 dimensional (muy útil este carácter de $\displaystyle n=2$ en estudios de conductividad sobre superficies, por ejemplo), se establecen dos pasos: $\displaystyle h=(b-a)/n$ y $\displaystyle k=(d-c)/m$, con $\displaystyle h$ y $\displaystyle n$ correspondiendo con la derivada en $\displaystyle x$, y $\displaystyle k$ y $\displaystyle m$ con la derivada en $\displaystyle y$.
+
+Se genera así la grilla $\displaystyle (x_{i},y_{j})$ (más específicamente, estos puntos son los \textit{puntos de malla} de la grilla, pero se les llama así a aquellos para los cuales $\displaystyle i=1,2,...,n-1$ y $\displaystyle j=1,2,...,m-1$, con $\displaystyle i$ y $\displaystyle j$ por definirse a continuación), tales que:
+
+\begin{center}
+$\displaystyle x_{i}=a+ih$, \ $\displaystyle i$ hasta $\displaystyle n$, desde 0\\
+$\displaystyle y_{j}=c+jk$, \ $\displaystyle j$ hasta $\displaystyle m$, desde 0
+\end{center}
+
+Se procede ahora con las expansiones a través de la serie de Taylor, generando así las fórmulas en diferencias centradas ($\displaystyle i=1,2,...,n-1$ y $\displaystyle j=1,2,...,m-1$):
+
+\begin{center}
+$\displaystyle \frac{\partial^{2}u}{\partial x^{2}}(x_{i},y_{j})=\frac{u(x_{i+1},y_{j})-2u(x_{i},y_{j})+u(x_{i-1},y_{j})}{h^{2}}-\frac{h^{2}}{12}\frac{\partial^{4}u}{\partial x^{4}}(\zeta _{i},y_{j})$, con $\displaystyle \zeta_{i}\in(x_{i-1},x_{i+1})$\\
+$\displaystyle \frac{\partial^{2}u}{\partial y^{2}}(x_{i},y_{j})=\frac{u(x_{i},y_{j+1})-2u(x_{i},y_{j})+u(x_{i},y_{j-1})}{k^{2}}-\frac{k^{2}}{12}\frac{\partial^{4}u}{\partial y^{4}}(x_{i},\eta_{j})$, con $\displaystyle \eta_{i}\in(y_{i-1},y_{i+1})$
+\end{center}
+
+Así, la ED se vuelve bastante simple, desde un punto de vista numérico:
+
+\begin{center}
+$\displaystyle \frac{u(x_{i+1},y_{j})-2u(x_{i},y_{j})+u(x_{i-1},y_{j})}{h^{2}}+\frac{u(x_{i},y_{j+1})-2u(x_{i},y_{j})+u(x_{i},y_{j-1})}{k^{2}}=f(x_{i},y_{j})+\frac{h^{2}}{12}\frac{\partial^{4}u}{\partial x^{4}}(\zeta_{i},y_{j})+\frac{k^{2}}{12}\frac{\partial^{4}u}{\partial y^{4}}(x_{i},\eta_{j})$
+\end{center}
+
+Todo esto resulta en el siguiente resumen para el método de diferencias finitas, aplicado a la ecuación de Poisson (haciendo el cambio $\displaystyle u(x_{i},y_{j})\rightarrow w_{ij}$):
+
+\begin{center}
+$\displaystyle 2[(h/k)^{2}+1]w_{ij}-(w_{i+1,j}+w_{i-1,j})-(h/k)^{2}(w_{i,j+1}+w_{i,j-1})=-h^{2}f(x_{i},y_{j})$, para $\displaystyle i=1,2,...,n-1$ y $\displaystyle j=1,2,...,m-1$
+\end{center}
+
+y con condiciones de frontera:
+
+\begin{center}
+$\displaystyle w_{0j}=g(x_{0},y_{j})$ y $\displaystyle w_{nj}=g(x_{n},y_{j})$, para cada $\displaystyle j=0,1,...,m$\\
+$\displaystyle w_{i0}=g(x_{i},y_{0})$ y $\displaystyle w_{im}=g(x_{i},y_{m})$, para cada $\displaystyle i=1,...,n-1$
+\end{center}
+
+Esto produce un sistema de ecuaciones lineal siendo los puntos $\displaystyle w_{ij}$ (los puntos interiores de la grilla) las incógnitas.
+
+El siguiente es un algoritmo que permite solucionar el sistema de ecuaciones que se presenta (este algoritmo hace uso del método iterativo de Gauss-Seidel, por lo que permite que $\displaystyle m\neq n$):
 
 
 
-Bla.\footnote{R. Burden, J. Faires. Numerical Analysis. 9th edition. 2011.}
-
-
-
-\section{\normalsize Sobre el empaquetado de código en C++ para creación de módulos para Python:}
+\section{Sobre el empaquetado de código en C++ para creación de módulos para Python:}
 
 
 
 
-\section{\normalsize Sobre VPython:}
+\section{Sobre VPython:}
 
 
 
 
-\section{\normalsize Procedimientos generales:}
+\section{Procedimientos generales:}
 
 
 
