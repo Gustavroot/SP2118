@@ -15,12 +15,12 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
         return NULL;
 
     //Se crea un array, en el cual se guardaran los datos ingresados
-    int datosingresados[8];
+    float datosingresados[8];
 
     //Se extraen esos datos ingresados
     for(i=0; i<PyList_Size(lista); i++){
         //printf("%d", (int)PyInt_AsLong(PyList_GetItem(lista,i)));
-        datosingresados[i]=PyInt_AsLong(PyList_GetItem(lista,i));
+        datosingresados[i]=PyFloat_AsDouble(PyList_GetItem(lista,i));
         //printf("%d", datosingresados[i]);
     }
 
@@ -55,7 +55,7 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
 */
     PyObject* lista2 = PyList_New(0);
     for(i=0; i<lengthArrayResults; i++){
-        PyList_Append(lista2, Py_BuildValue("i", datosingresados[i]));
+        PyList_Append(lista2, Py_BuildValue("f", (float)datosingresados[i]));
     }
     //return Py_BuildValue(strToPassPyObj, &datosingresados);
     //return Py_BuildValue("i", 56);

@@ -36,18 +36,41 @@ print "------------------------------------------------------------------------"
 print "\nPrograma para la visualizacion de la solucion a la ecuacion de Poisson:"
 print "(todas las distancias estan en cm)"
 print "\n"
-endpointA=raw_input('Ingrese limite de la izquierda (ej. 0): ')
-endpointB=raw_input('Ingrese limite de la derecha (ej. 3.2): ')
-endpointC=raw_input('Ingrese limite de arriba (ej. 0): ')
-endpointD=raw_input('Ingrese limite de abajo: (ej. 1.6): ')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m): ')
-stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n): ')
-tolerance=raw_input('Ingrese la tolerancia (TOL): ')
-maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N): ')
+endpointA=raw_input('Ingrese limite de la izquierda (a default=0): ')
+endpointB=raw_input('Ingrese limite de la derecha (b default=3): ')
+endpointC=raw_input('Ingrese limite de arriba (c default=0): ')
+endpointD=raw_input('Ingrese limite de abajo: (d default=1.5): ')
+stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=5): ')
+stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=5): ')
+tolerance=raw_input('Ingrese la tolerancia (tol default=0.1): ')
+maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N default=20): ')
+
+#En caso de no ingresar objetos numericos, se hace un cambio del valor al default,
+#esto para cada uno de los ingresados
+if not(endpointA.isdigit()):
+    endpointA=0
+if not(endpointB.isdigit()):
+    endpointB=3
+if not(endpointC.isdigit()):
+    endpointC=0
+if not(endpointD.isdigit()):
+    endpointD=1.5
+if not(stepM.isdigit()):
+    stepM=5
+if not(stepN.isdigit()):
+    stepN=5
+if not(tolerance.isdigit()):
+    tolerance=0.1
+if not(maxIterationsN.isdigit()):
+    maxIterationsN=20
+
+#Seria bueno agregar un verificado de la conmensurabilidad entre
+#los limites superiores y la cantidad de divisiones de los ejes,
+#pero ya hay un limite en N...
 
 
 #Llamado al modulo de C aqui
-arrayRESULT=modulopoisson.solvepoisson([int(endpointA), int(endpointB), int(endpointC), int(endpointD), int(stepM), int(stepN), int(tolerance), int(maxIterationsN)])
+arrayRESULT=modulopoisson.solvepoisson([float(endpointA), float(endpointB), float(endpointC), float(endpointD), float(stepM), float(stepN), float(tolerance), float(maxIterationsN)])
 print "\nEjecutando resolucion a traves de modulo de C...\n"
 print arrayRESULT
 

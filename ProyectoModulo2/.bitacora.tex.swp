@@ -158,6 +158,7 @@ Para evitar problemas, es preferible hacer los castings necesarios desde Python,
 
 Se puede presentar el problema de que se haya hecho el empaquetado del módulo (\$ python setup.py build) siendo superusuario, en cuyo caso hay que borrar el directorio "build"\ que se crea, esto para evitar conflictos de permisos a la hora de la ejecución, y llevar a cabo de nuevo el empaquetado, con su posterior instalación asociada.
 
+En este caso, si se desea (una vez que se esté programando en el módulo de C) hacer uso de objetos de Python en C, la documentación oficial\footnote{http://docs.python.org/2/c-api/concrete.html} resulta muy útil.
 
 \section{Sobre VPython:}
 
