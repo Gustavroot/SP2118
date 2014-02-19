@@ -25,6 +25,7 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     }
 
 
+
     //Procesamiento de los datos ingresados...
     //-----------------------------------------------------------------
     //Longitud del array de resultados...
@@ -32,8 +33,11 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //code...
     //-----------------------------------------------------------------
 
+
+
     // Retorna un objeto Python, a partir del array resultante...
     lengthArrayResults=8;
+/*
     int lengthStrToPassPyObj=lengthArrayResults+2+(lengthArrayResults-1)+1; //ese 1 extra es para el caracter de escape \n
     char *strToPassPyObj;
     //Se hace un pedido de memoria, de manera dinamica...
@@ -48,7 +52,14 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //Se imprime el array, para probar...
     printf("%s", strToPassPyObj);
     //return Py_BuildValue("i", estado);
-    return Py_BuildValue(strToPassPyObj, &datosingresados);
+*/
+    PyObject* lista2 = PyList_New(0);
+    for(i=0; i<lengthArrayResults; i++){
+        PyList_Append(lista2, Py_BuildValue("i", datosingresados[i]));
+    }
+    //return Py_BuildValue(strToPassPyObj, &datosingresados);
+    //return Py_BuildValue("i", 56);
+    return lista2;
     //return listaReturn;
 }
 
