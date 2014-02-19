@@ -1,0 +1,17 @@
+# coding: utf-8
+# 
+# IE-0117 Programación Bajo Plataformas Abiertas
+# 
+# Integración C - Python
+# Script para construir la biblioteca de Python
+#
+
+from distutils.core import setup, Extension
+
+modulopoissonmodule = Extension('modulopoisson', sources=['modulopoissonmodule.c'])
+
+setup(name='ModulopoissonModule',
+    version='0.1',
+    description='Resolucion de la ecuacion de Poisson',
+    ext_modules=[modulopoissonmodule]
+    )

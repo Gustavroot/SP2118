@@ -2,7 +2,7 @@
 
 #Importaciones aqui
 #import math
-
+import modulopoisson
 
 #Definiciones de funciones aqui
 
@@ -32,23 +32,26 @@ def boundaryFunctionD():
 
 #Inicializacion de objetos aqui
 #print "eso"
-print "\n"
-print "Programa para la visualizacion de la solucion a la ecuacion de Poisson:"
+print "------------------------------------------------------------------------"
+print "\nPrograma para la visualizacion de la solucion a la ecuacion de Poisson:"
 print "(todas las distancias estan en cm)"
 print "\n"
-endpointA=raw_input('Ingrese limite de la izquierda (ej. 0):')
-endpointB=raw_input('Ingrese limite de la derecha (ej. 3.2):')
-endpointC=raw_input('Ingrese limite de arriba (ej. 0):')
-endpointD=raw_input('Ingrese limite de abajo: (ej. 1.6)')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m):')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje x (n):')
-tolerance=raw_input('Ingrese la tolerancia (TOL):')
-maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N):')
+endpointA=raw_input('Ingrese limite de la izquierda (ej. 0): ')
+endpointB=raw_input('Ingrese limite de la derecha (ej. 3.2): ')
+endpointC=raw_input('Ingrese limite de arriba (ej. 0): ')
+endpointD=raw_input('Ingrese limite de abajo: (ej. 1.6): ')
+stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m): ')
+stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n): ')
+tolerance=raw_input('Ingrese la tolerancia (TOL): ')
+maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N): ')
 
 
 #Llamado al modulo de C aqui
+arrayRESULT=modulopoisson.solvepoisson([int(endpointA), int(endpointB), int(endpointC), int(endpointD), int(stepM), int(stepN), int(tolerance), int(maxIterationsN)])
+print "\nEjecutando resolucion a traves de modulo de C...\n"
+print arrayRESULT
 
 
-#Codigo pesado aqui
+#Codigo pesado aqui... VPython
 
 
