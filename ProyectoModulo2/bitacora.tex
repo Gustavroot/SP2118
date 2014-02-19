@@ -135,8 +135,9 @@ $\displaystyle w_{i0}=g(x_{i},y_{0})$ y $\displaystyle w_{im}=g(x_{i},y_{m})$, p
 
 Esto produce un sistema de ecuaciones lineal siendo los puntos $\displaystyle w_{ij}$ (los puntos interiores de la grilla) las incógnitas.
 
-El siguiente es un algoritmo que permite solucionar el sistema de ecuaciones que se presenta (este algoritmo hace uso del método iterativo de Gauss-Seidel, por lo que permite que $\displaystyle m\neq n$):
+El algoritmo que permite solucionar el sistema de ecuaciones que se presentó anteriormente (este algoritmo hace uso del método iterativo de Gauss-Seidel, por lo que permite que $\displaystyle m\neq n$) se puede consultar como el algoritmo 12.1 del Numerical Analysis, Burden \& Faires, novena edición. En el caso de este proyecto, se implementó dicho algoritmo en el módulo de C, en el archivo llamado modulopoissonmodule.c.
 
+La forma en que se eligió la relación entre los índices de conteo y la forma de la grilla puede que sea un poco distinta a lo normal. Se optó por colocar el punto 0,0 en la esquina inferior izquierda (viendo al plano xy de la forma habitual, desde arriba), y luego se comenzó el conteo del arreglo hacia la derecha, sobre el eje x, y después al llegar al final de la primera línea, se salta al extremo izquierdo de la segunda línea (que está encima de la primera), y así sucesivamente.
 
 
 \section{Sobre el empaquetado de código en C++ para creación de módulos para Python:}
