@@ -281,6 +281,15 @@ Los detalles de los scripts mismos se pueden encontrar en ellos, los cuales ya v
 \item El dibujado de figuras sobre imágenes, así como la implementación de eventos (como click derecho, por ejemplo) en las mismas, resultan las herramientas básicas e indispensables para el uso del mouse como herramienta de dibujo sobre un video.
 \end{itemize}
 
+En ocasiones se desconfigura OpenCV (porque se instaló otra versión anteriormente, y esa versión no es compatible con la versión específica de ffmpeg, o porque está mal instalada, o por la razón que sea), y es preferible en ese caso llevar a cabo la instalación de nuevo:
+
+\begin{lstlisting}
+$ cd build
+$ sudo make uninstall
+$ sudo make install
+\end{lstlisting}
+
+
 \subsection{\normalsize \textit{Core operations}}
 
 

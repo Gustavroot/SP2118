@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #Resolucion recomendada: 1280x710, para Acer Aspire 14 pulgadas
+#640x480
 resolucion=1280x710
 
 #Specify ffmpeg PATH

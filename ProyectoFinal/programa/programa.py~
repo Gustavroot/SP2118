@@ -62,7 +62,7 @@ def draw_lines(event, x, y, flags, param):
         specificList.append(bufferArray)
         drawing = True
         ix,iy = x,y
-        print param[x,y]
+        print param[y,x]
     #Arrastrado del mouse
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
@@ -105,28 +105,42 @@ def procesado(filename):
     global listadoFilesLazos, generalList
 
     print "\nIniciando procesado del archivo %s..." %filename
+    #Las siguientes dos lineas son una extraccion de un frame,
+    #y la idea es no cambiar esto, para luego hacer una comparacion del tipo de
+    #este frame, con el tipo del frame que si va cambiando, esto para la detencion
+    #del while...
+    print sys.argv[1]+filename
     tmpVideo = cv2.VideoCapture(sys.argv[1]+filename)
+    if not tmpVideo:
+        print "SE ARMO"
     tmpRet, tmpFrame=tmpVideo.read()
+    #Extraccion del archivo video
     cap = cv2.VideoCapture(sys.argv[1]+filename)
     #print cap.get(3)
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
     while True:
         estadoFinal="sin interrumpir"
+        #Extraccion del frame
         ret, frame = cap.read()
         #Setting width and height
-        #... pending
+        #... pending!
+        #Lo que se mencionaba antes... en caso de no tener el tipo adecuado el frame
+        #que se extrajo, quiere decir que se llego al final del video
         if type(frame)!=type(tmpFrame):
             break
         #print np.size(frame, 1)
         #print np.size(frame, 0)
-        #img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        img = cv2.cvtColor(frame, 0)
-
-        #Dibujado de poligonos... (si es que los hay)
+        #Otra forma de verificar que se ha llegado al final del video...
+        if not frame:
+            break
+        img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #img = cv2.cvtColor(frame, 0)
+        #Dibujado de poligonos... (si es que los hay)... hay que recordar que generalList
+        #es una lista que contiene listas, y cada una de esas listas interas es un conjunto
+        #de puntos asociados a un poligono anteriormente dibujado
         for x in generalList:
             cv2.polylines(img,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
-
         #print type(img)
         #print filename
         cv2.namedWindow(filename)
