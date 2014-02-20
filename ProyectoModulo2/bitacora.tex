@@ -161,6 +161,9 @@ Se puede presentar el problema de que se haya hecho el empaquetado del módulo (
 
 En este caso, si se desea (una vez que se esté programando en el módulo de C) hacer uso de objetos de Python en C, la documentación oficial\footnote{http://docs.python.org/2/c-api/concrete.html} resulta muy útil.
 
+Hay que tener el cuidado de llenar de ceros el arreglo solicitado con malloc, pues con la memoria dinámica no se tienen ceros.
+
+
 \section{Sobre VPython:}
 
 

@@ -68,7 +68,14 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //Se define variable con pasos... h es para el eje x, k es para el y
     double h=(datosingresados[1]-datosingresados[0])/datosingresados[5];
     double k=(datosingresados[3]-datosingresados[2])/datosingresados[4];
+    printf("Pasos: %f %f \n", h, k);
     arrayResults=(double *)malloc(totalDatos*sizeof(double));
+
+    //SE LLENA DE CEROS EL ARRAY
+    for(i=0; i<totalDatos; i++){
+        arrayResults[i]=0;
+    }
+
     //Se ingresan los valores de frontera izquierda
     int counterToFill=0;
     for(i=0; i<(int)totalDatos; i+=(int)(datosingresados[5]+1)){
@@ -99,34 +106,109 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //de grilla internos, lo cual ya esta hecho tambien.. hay que tener claro
     //que las iteraciones se dan con i desde 1 hasta n-1, y con j desde 1 hasta
     //m-1
-    //3. el tercer paso es el llenado de la grilla con ceros, lo cual esta hecho
-    //de manera automatica al solicitar memoria dinamicamente
+    //3. el tercer paso es el llenado de la grilla con ceros, lo cual ya se hizo
     //4. Se crean mas constantes, llamadas lambda, muC, eleC
     double lambdaC=(h*h)/(k*k);
     double muC=2*(1+lambdaC);
     double eleC=1;
+    //printf("%f", muC);
     //5. se lleva a cabo un while, que controla el resto del flujo del programa,
     //y se sale de este while en caso de superar el numero de iteraciones N... lo
     //que se hace en este while son iteraciones de Gauss-Seidell
     //Se declaran algunas variables antes del while, que se utilizaran ahi
-    double z, norm;
-    while(eleC<datosingresados[7]){
-        z=(-(h*h)*FnDensidad(datosingresados[0]+1*h,datosingresados[2]+(datosingresados[4]-1)*k)+FnFronteraIzquierda(datosingresados[2]+(datosingresados[4]-1)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+1*h)+lambdaC*arrayResults[(int)(1+(datosingresados[4]-2)*(datosingresados[5]+1))]+arrayResults[(int)(2+(datosingresados[4]-1)*(datosingresados[5]+1))])/muC;
-        norm=abs(z-arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]);
+    double z;
+    double norm;
+    while(eleC<(datosingresados[7]+1)){
+        //Paso 7 del libro...
+        z=(-(h*h)*FnDensidad(datosingresados[0]+1.0*h,datosingresados[2]+(datosingresados[4]-1.0)*k)+FnFronteraIzquierda(datosingresados[2]+(datosingresados[4]-1.0)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+1.0*h)+lambdaC*arrayResults[(int)(1.0+(datosingresados[4]-2.0)*(datosingresados[5]+1.0))]+arrayResults[(int)(2.0+(datosingresados[4]-1.0)*(datosingresados[5]+1.0))])/muC;
+        //printf("Z: %f \n", z);
+        norm=fabs(z-arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]);
+        //printf("BICHO: %f \n", arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]);
+        //printf("%f \n", fabs(-1.0));
         arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]=z;
-        for(i=2; i<(datosingresados[5]-2); i++){
-            //code...
+        //printf("%f \n", arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]);
+        //Paso 8 del libro...
+        for(i=2; i<(datosingresados[5]-1); i++){
+            z=(-(h*h)*FnDensidad(datosingresados[0]+((float)(i)*h),datosingresados[2]+(datosingresados[4]-1.0)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+(float)(i)*h)+arrayResults[(int)((float)(i-1)+(datosingresados[4]-1.0)*(datosingresados[5]+1.0))]+arrayResults[(int)((float)(i+1)+(datosingresados[4]-1.0)*(datosingresados[5]+1.0))]+lambdaC*arrayResults[(int)((float)(i)+(datosingresados[4]-2.0)*(datosingresados[5]+1.0))])/muC;
+            if(fabs(arrayResults[(int)(i+(datosingresados[4]-1)*(datosingresados[5]+1))]-z)>norm){
+                norm=fabs(arrayResults[(int)(i+(datosingresados[4]-1)*(datosingresados[5]+1))]-z);
+            }
+            arrayResults[(int)(i+(datosingresados[4]-1)*(datosingresados[5]+1))]=z;
         }
-
+        //printf("Z: %f \n", z);
+        //printf("NORM: %f \n", norm);
+        //Paso 9 del libro...
+        z=(-(h*h)*FnDensidad(datosingresados[0]+(datosingresados[5]-1)*h,datosingresados[2]+(datosingresados[4]-1)*k)+FnFronteraDerecha(datosingresados[2]+(datosingresados[4]-1)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+(datosingresados[5]-1)*h)+arrayResults[(int)((datosingresados[5]-2)+(datosingresados[4]-1)*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)((datosingresados[5]-1)+(datosingresados[4]-2)*(datosingresados[5]+1))])/muC;
+        if(fabs(arrayResults[(int)((datosingresados[5]-1)+(datosingresados[4]-1)*(datosingresados[5]+1))]-z)>norm){
+            norm=fabs(arrayResults[(int)((datosingresados[5]-1)+(datosingresados[4]-1)*(datosingresados[5]+1))]-z);
+        }
+        arrayResults[(int)((datosingresados[5]-1)+(datosingresados[4]-1)*(datosingresados[5]+1))]=z;
+        //Paso 10 del libro...
+        for(j=(datosingresados[4]-2); j>1; j--){
+            //Paso 11 del libro...
+            z=(-(h*h)*FnDensidad(datosingresados[0]+1*h,datosingresados[2]+j*k)+FnFronteraIzquierda(datosingresados[2]+j*k)+lambdaC*arrayResults[(int)(1+(j+1)*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)(1+(j-1)*(datosingresados[5]+1))]+arrayResults[(int)(2+j*(datosingresados[5]+1))])/muC;
+            if(fabs(arrayResults[(int)(1+j*(datosingresados[5]+1))]-z)>norm){
+                norm=fabs(arrayResults[(int)(1+j*(datosingresados[5]+1))]-z);
+            }
+            arrayResults[(int)(1+j*(datosingresados[5]+1))]=z;
+            //Paso 12 del libro...
+            for(i=2; i<(datosingresados[5]-1); i++){
+                z=(-(h*h)*FnDensidad(datosingresados[0]+i*h,datosingresados[2]+j*k)+arrayResults[(int)((i-1)+(j)*(datosingresados[5]))]+lambdaC*arrayResults[(int)(i+(j+1)*(datosingresados[5]))]+arrayResults[(int)((i+1)+j*(datosingresados[5]))]+lambdaC*arrayResults[(int)(i+(j-1)*(datosingresados[5]))])/muC;
+                if(fabs(arrayResults[(int)(i+j*(datosingresados[5]+1))]-z)>norm){
+                    norm=fabs(arrayResults[(int)(i+j*(datosingresados[5]+1))]-z);
+                }
+                arrayResults[(int)(i+j*(datosingresados[5]+1))]=z;
+            }
+            //Paso 13 del libro...
+            z=(-(h*h)*FnDensidad(datosingresados[0]+(datosingresados[5]-1)*h,datosingresados[2]+j*k)+FnFronteraDerecha(datosingresados[2]+j*k)+arrayResults[(int)((datosingresados[5]-2)+j*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)((datosingresados[5]-1)+(j+1)*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)((datosingresados[5]-1)+(j-1)*(datosingresados[5]+1))])/muC;
+            if(fabs(arrayResults[(int)((datosingresados[5]-1)+j*(datosingresados[5]+1))]-z)>norm){
+                norm=fabs(arrayResults[(int)((datosingresados[5]-1)+j*(datosingresados[5]+1))]-z);
+            }
+            arrayResults[(int)((datosingresados[5]-1)+j*(datosingresados[5]+1))]=z;
+        }
+        //Paso 14 del libro...
+        z=(-(h*h)*FnDensidad(datosingresados[0]+1*h,datosingresados[2]+1*k)+FnFronteraIzquierda(datosingresados[2]+1*k)+lambdaC*FnFronteraInferior(datosingresados[0]+1*h)+lambdaC*arrayResults[(int)(1+2*(datosingresados[5]+1))]+arrayResults[(int)(2+1*(datosingresados[5]+1))])/muC;
+        if(fabs(arrayResults[(int)(1+1*(datosingresados[5]+1))]-z)>norm){
+            norm=fabs(arrayResults[(int)(1+1*(datosingresados[5]+1))]-z);
+        }
+        arrayResults[(int)(1+1*(datosingresados[5]+1))]=z;
+        //Paso 15 del libro...
+        for(i=2; i<(datosingresados[4]-1); i++){
+            z=(-(h*h)*FnDensidad(datosingresados[0]+i*h,datosingresados[2]+1*k)+lambdaC*FnFronteraInferior(datosingresados[0]+i*h)+arrayResults[(int)((i-1)+1*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)(i+2*(datosingresados[5]+1))]+arrayResults[(int)((i+1)+1*(datosingresados[5]+1))])/muC;
+            if(fabs(arrayResults[(int)(i+1*(datosingresados[5]+1))]-z)>norm){
+                norm=fabs(arrayResults[(int)(i+1*(datosingresados[5]+1))]-z);
+            }
+            arrayResults[(int)(i+1*(datosingresados[5]+1))]=z;
+        }
+        //Paso 16 del libro...
+        z=(-(h*h)*FnDensidad(datosingresados[0]+(datosingresados[5]-1)*h,datosingresados[2]+1*k)+FnFronteraDerecha(datosingresados[2]+1*k)+lambdaC*FnFronteraInferior(datosingresados[0]+(datosingresados[5]-1)*h)+arrayResults[(int)((datosingresados[5]-2)+1*(datosingresados[5]+1))]+lambdaC*arrayResults[(int)((datosingresados[5]-1)+2*(datosingresados[5]+1))])/muC;
+        if(fabs(arrayResults[(int)((datosingresados[5]-1)+1*(datosingresados[5]+1))]-z)>norm){
+            norm=fabs(arrayResults[(int)((datosingresados[5]-1)+1*(datosingresados[5]+1))]-z);
+        }
+        arrayResults[(int)((datosingresados[5]-1)+1*(datosingresados[5]+1))]=z;
+        //Paso 17 del libro...
+        //printf("\n Numero de iteracion: %f. Norm: %f \n", eleC, norm);
+        //printf("NORM: %f \n", norm);
+        if(norm<datosingresados[6]){
+            lengthArrayResults=(datosingresados[4]+1)*(datosingresados[5]+1);
+            PyObject* lista2 = PyList_New(0);
+            for(i=0; i<lengthArrayResults; i++){
+                PyList_Append(lista2, Py_BuildValue("f", arrayResults[i]));
+            }
+            //Se imprime cuantas iteraciones se llevaron a cabo...
+            printf("Proceso finalizado. Num. iteraciones: %d \n\n", (int)eleC);
+            return lista2;
+        }
         eleC++;
     }
+    printf("\nNo se alcanzo la tolerancia deseada con el numero maximo de interaciones ingresadas...");
+    return Py_BuildValue("i",0);
 
     //-----------------------------------------------------------------
 
 
 
     // Retorna un objeto Python, a partir del array resultante...
-    lengthArrayResults=(datosingresados[4]+1)*(datosingresados[5]+1);
 /*
     int lengthStrToPassPyObj=lengthArrayResults+2+(lengthArrayResults-1)+1; //ese 1 extra es para el caracter de escape \n
     char *strToPassPyObj;
@@ -143,6 +225,8 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     printf("%s", strToPassPyObj);
     //return Py_BuildValue("i", estado);
 */
+/*
+    lengthArrayResults=(datosingresados[4]+1)*(datosingresados[5]+1);
     PyObject* lista2 = PyList_New(0);
     for(i=0; i<lengthArrayResults; i++){
         PyList_Append(lista2, Py_BuildValue("f", arrayResults[i]));
@@ -150,6 +234,8 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //return Py_BuildValue(strToPassPyObj, &datosingresados);
     //return Py_BuildValue("i", 56);
     return lista2;
+*/
+
     //return listaReturn;
 }
 
