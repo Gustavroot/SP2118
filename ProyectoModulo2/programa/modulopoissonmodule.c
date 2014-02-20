@@ -111,11 +111,11 @@ static PyObject *modulopoisson_solvepoisson(PyObject *self, PyObject *args) {
     //Se declaran algunas variables antes del while, que se utilizaran ahi
     double z, norm;
     while(eleC<datosingresados[7]){
-        z=(-(h*h)*FnDensidad(datosingresados[0]+1*h,datosingresados[2]+(datosingresados[4]-1)*k)+FnFronteraIzquierda(datosingresados[2]+(datosingresados[4]-1)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+1*h)+lambdaC*arrayResults[(int)(1+(datosingresados[4]-2)*datosingresados[5])]+arrayResults[(int)(2+(datosingresados[4]-1)*datosingresados[5])])/muC;
-        norm=abs(z-arrayResults[(int)(1+(datosingresados[4]-1)*datosingresados[5])]);
-        arrayResults[(int)(1+(datosingresados[4]-1)*datosingresados[5])]=z;
-        for(i=2; i<(datosingresados[5])){
-            
+        z=(-(h*h)*FnDensidad(datosingresados[0]+1*h,datosingresados[2]+(datosingresados[4]-1)*k)+FnFronteraIzquierda(datosingresados[2]+(datosingresados[4]-1)*k)+lambdaC*FnFronteraSuperior(datosingresados[0]+1*h)+lambdaC*arrayResults[(int)(1+(datosingresados[4]-2)*(datosingresados[5]+1))]+arrayResults[(int)(2+(datosingresados[4]-1)*(datosingresados[5]+1))])/muC;
+        norm=abs(z-arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]);
+        arrayResults[(int)(1+(datosingresados[4]-1)*(datosingresados[5]+1))]=z;
+        for(i=2; i<(datosingresados[5]-2); i++){
+            //code...
         }
 
         eleC++;
