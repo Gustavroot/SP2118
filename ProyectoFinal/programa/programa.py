@@ -20,6 +20,9 @@ listadoFilesLazos=[]
 generalList=[]
 specificList=[]
 
+#El siguiente es el intervalo temporal, en ms, entre frames...
+espaciadoTemporal=15
+
 #La siguiente lista contendra las intensidades, que serviran luego para llevar
 #a cabo los graficados de intensidad vs tiempo
 listaIntensidades=[]
@@ -193,7 +196,7 @@ def procesado(filename):
 
         #cv2.namedWindow(filename,img)
         #cv2.setMouseCallback(filename,draw_lines)
-        keyFinger=cv2.waitKey(15) & 0xFF
+        keyFinger=cv2.waitKey(espaciadoTemporal) & 0xFF
         if keyFinger == ord('q'):
             #Cuando se presiona la tecla q, se detiene hasta que se vuelva a presionar dicha letra
             print "Detenido..."
@@ -221,7 +224,7 @@ def procesado(filename):
     #Ademas, hay que etiquetar el sistema de coordenadas... aqui esta PENDIENTE encontrar
     #los centros de los poligonos, para rotular esto... ademas, hace falta hacer un rotulado
     #del sistema coordenado
-    
+    #FALTA!
 
     #Detalles finales del procesado de videos...
     tmpVideo.release()
@@ -255,6 +258,14 @@ for elem in sys.argv:
 
 #print len(listadoFilesLazos)
 print listaIntensidades
+espaciadoTemporalMS=float(espaciadoTemporal)/1000
+#Ahora se procede al guardado de los valores de intensidad en archivos
+for cntAR in range(len(listaIntensidades)):
+    for cntAR2 in range(len(listaIntensidades[cntAR])):
+        miarchivo = open('Datos_'+sys.argv[cntAR+2]+'_'+str(cntAR2)+'.dat', 'w')
+        for cntAR3 in range(len(listaIntensidades[cntAR][cntAR2])):
+            miarchivo.write(str(cntAR3*espaciadoTemporalMS)+"    "+str(listaIntensidades[cntAR][cntAR2][cntAR3])+"\n")
+#fin del for...        
 
 
 #Hay que llevar a cabo un guardado adecuado de la informacion en listaIntensidades... todo

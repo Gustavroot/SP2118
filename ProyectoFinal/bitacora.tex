@@ -319,17 +319,9 @@ Los histogramas\footnote{http://opencvpython.blogspot.com/2013/03/histograms-1-f
 \item Se generaron imágenes 2D, una por cada video, en las cuales se hace un dibujado de un plano cartesiano, y en él los polígonos trazados para ese video en específico.
 \item PENDIENTE: trabajar con contornos\footnote{http://opencvpython.blogspot.com/2012/06/hi-this-article-is-tutorial-which-try.html} en OpenCV, con lo cual se encuentran los centros (esto está pendiente en el guardado de la distribución de polígonos, las imágenes en 2D... también está PENDIENTE el rotulado de los ejes de sistema coordenado en esas imágenes 2D) y además se obtienen las intensidades promedio para cada contorno (esto está pendiente en el llenado de listaIntensidades, ya que se llenó con 1s y no con las intensidades correctas).
 \item Se llevó a cabo un guardado adecuado de la información de las intensidades, esto en archivos txt, para un posterior procesamiento con gnuplot.
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
-\item 
+\item Se hizo un llamado a gnuplot para el graficado de las intensidades vs tiempo.
+\item Se creó un repositorio en Github, al cual se hace push de manera automática en el script general.sh. El guardado de carpetas es tal que al guardarse los resultados del análisis, se hace con la fecha, y además se le agrega un identificador único (en este caso se empleó el comando 'date +\%s').
+\item El scripting con gnuplot es un poco trucoso. En medio de un script de bash común y corriente, si se agrega la línea "gnuplot < \ < \ EOF"\, entonces se puede proseguir con líneas de scripting como si se estuviera trabajando en gnuplot (es importante notar que el scripting de gnuplot se cierra con la serie de letras EOF, ver script general.sh). Esto sirve para procesar con gnuplot un conjunto de archivos, como es el caso de este programa. Esta implementación se llevó a cabo en el archivo general.sh.
 \end{itemize}
 
 \subsection{\normalsize \textit{Core operations}}
