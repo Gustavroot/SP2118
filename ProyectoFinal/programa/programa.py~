@@ -164,7 +164,7 @@ def procesado(filename):
         cntROTULADO=0
         for x in generalList:
             fontSCR = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(img,str(cntROTULADO),generalList[cntROTULADO][0], fontSCR, 1,(255,255,255),2,2)
+            cv2.putText(img,str(cntROTULADO),(generalList[cntROTULADO][0][0],generalList[cntROTULADO][0][1]), fontSCR, 1,(255,255,255),2,2)
             cv2.polylines(img,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
             cntROTULADO+=1
         #print type(img)
@@ -205,9 +205,29 @@ def procesado(filename):
             estadoFinal="interrumpido"
             break
         counterFrames+=1
+
+    #Se procedera ahora a generar una imagen 2D con la ubicacion de las regiones dibujadas...
+    #ademas de posiciones en un plano cartesiano
+    img2D = np.zeros((tmpFrame.shape[0],tmpFrame.shape[1],3), np.uint8)
+    cntROTULADO=0
+    for x in generalList:
+        fontSCR = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(img2D,str(cntROTULADO),(generalList[cntROTULADO][0][0],generalList[cntROTULADO][0][1]), fontSCR, 1,(255,255,255),2,2)
+        cv2.polylines(img2D,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
+        cntROTULADO+=1
+    cv2.line(img2D,(0,tmpFrame.shape[0]/2),(tmpFrame.shape[1],tmpFrame.shape[0]/2),(255,0,0),5)
+    cv2.line(img2D,(tmpFrame.shape[1]/2,0),(tmpFrame.shape[1]/2,tmpFrame.shape[0]),(255,0,0),5)
+    cv2.imwrite('RESULTS/2D_'+str(counter-2)+'_'+filename+'.png',img2D)
+    #Ademas, hay que etiquetar el sistema de coordenadas... aqui esta PENDIENTE encontrar
+    #los centros de los poligonos, para rotular esto... ademas, hace falta hacer un rotulado
+    #del sistema coordenado
+    
+
     #Detalles finales del procesado de videos...
     tmpVideo.release()
     cap.release()
+
+
     #Buscar una forma de liberar estos dos sin que genere error...!
     #cap.release()
     #cv2.destroyAllWindows()
