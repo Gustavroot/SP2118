@@ -87,6 +87,10 @@ def draw_lines(event, x, y, flags, param):
         #por lo que hay que agregar un nuevo elemento a listaIntensidades, y hay
         #que recordar que counter es un contador para los videos
         listaIntensidades[counter-2].append([])
+        #Ademas, se debe hacer un llenado de acuerdo al tiempo, con 0s, puesto que
+        #antes del dibujado no hay registros, correspondiente al ultimo poligono dibujado
+        for cnt in range(0, counterFrames):
+            listaIntensidades[counter-2][len(listaIntensidades[counter-2])-1].append(0)
 
         bufferArray=[x,y]
         specificList.append(bufferArray)
@@ -158,6 +162,24 @@ def procesado(filename):
         cv2.namedWindow(filename)
         cv2.setMouseCallback(filename,draw_lines, img)
         cv2.imshow(filename, img)
+
+        #---------------------------------------------------------------------------------------------------
+        #Este parece ser un buen punto para un procesado...
+        #Aqui se toma la lista listadoFilesLazos, que contiene la informacion de los poligonos, y se hace
+        #un procesado de esos poligonos... lo que hay que hacer es obtener la intensidad promedio, para la
+        #figura formada por cada uno de esos poligonos... esas intensidades se guardan en listaIntensidades
+        #Hay que recordar que generalList representa cada uno de los elementos (listado, para cada video,
+        #con la info de los poligonos) que luego seran anexados a listadoFilesLazos
+        for cnt in range(0, len(generalList)):
+            #Procesar al conjunto de puntos en listadoFilesLazos[counter-2][cnt], para obtener la intensidad
+            #promedio del poligono que representan dichos puntos
+            #Una vez obtenido el valor anterior, se inserta en la listaIntensidades (temporalmente se
+            #insertara un 1)
+            #Se crea la variable, como representacion de lo que luego sera una intensidad...
+            intensidadBuffer=1
+            for cnt2 in range(0,len(listaIntensidades[counter-2])):
+                listaIntensidades[counter-2][cnt2].append(intensidadBuffer)
+        #---------------------------------------------------------------------------------------------------
 
         #cv2.namedWindow(filename,img)
         #cv2.setMouseCallback(filename,draw_lines)
