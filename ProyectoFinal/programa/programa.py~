@@ -16,11 +16,16 @@ ix,iy = -1,-1
 #Esta primera lista es la mas general... contiene un listado con n
 #elementos, 1 por cada video. Cada elemento es un listado de los lazos
 #correspondientes al video correspondiente
-#La lista listadoFilesLazos parece ser completamente innecesaria...
 listadoFilesLazos=[]
 generalList=[]
 specificList=[]
 
+#La siguiente lista contendra las intensidades, que serviran luego para llevar
+#a cabo los graficados de intensidad vs tiempo
+listaIntensidades=[]
+
+#Est contador se utilizara mas adelante, y se reseteara, para conteo de frames
+counterFrames=1
 
 #img = cv2.imread('/home/gustavo/Desktop/Progra_Verano/GITrepo/ProyectoModulo5/testImgs/Blackeyegalaxy.jpg',0)
 #img=None
@@ -78,6 +83,11 @@ def draw_lines(event, x, y, flags, param):
     #Cuando se suelta el mouse, se detiene el dibujado, y se completa
     #asi una figura cerrada
     elif event == cv2.EVENT_LBUTTONUP:
+        #Cuando se suelta el mouse, quiere decir que se creo un nuevo poligono,
+        #por lo que hay que agregar un nuevo elemento a listaIntensidades, y hay
+        #que recordar que counter es un contador para los videos
+        listaIntensidades[counter-2].append([])
+
         bufferArray=[x,y]
         specificList.append(bufferArray)
         drawing = False
@@ -102,7 +112,7 @@ def draw_lines(event, x, y, flags, param):
 
 #A esta funcion se le pasara cada uno de los archivos de video, para ser procesados
 def procesado(filename):
-    global listadoFilesLazos, generalList
+    global listadoFilesLazos, generalList, counterFrames
 
     print "\nIniciando procesado del archivo %s..." %filename
     #Las siguientes dos lineas son una extraccion de un frame,
@@ -119,7 +129,9 @@ def procesado(filename):
     #print cap.get(3)
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
+    counterFrames=1
     while True:
+        print counterFrames
         estadoFinal="sin interrumpir"
         #Extraccion del frame
         ret, frame = cap.read()
@@ -132,8 +144,8 @@ def procesado(filename):
         #print np.size(frame, 1)
         #print np.size(frame, 0)
         #Otra forma de verificar que se ha llegado al final del video...
-        if not frame:
-            break
+        #if not frame:
+        #    break
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         #img = cv2.cvtColor(frame, 0)
         #Dibujado de poligonos... (si es que los hay)... hay que recordar que generalList
@@ -160,6 +172,8 @@ def procesado(filename):
         elif keyFinger == ord('s'):
             estadoFinal="interrumpido"
             break
+        counterFrames+=1
+    #Detalles finales del procesado de videos...
     tmpVideo.release()
     cap.release()
     #Buscar una forma de liberar estos dos sin que genere error...!
@@ -180,11 +194,15 @@ print "(al dibujar las regiones de conteo, recuerde que la primera es la global,
 counter=0
 for elem in sys.argv:
     if counter>=2:
+        #Cada entrada principal de listaIntensidades es un video
+        listaIntensidades.append([]) #esto se pone antes del llamado a procesado, puesto que si no hay un out of scope
         #print sys.argv[counter]
         #print counter
         procesado(sys.argv[counter])
     counter+=1
 
+print len(listadoFilesLazos)
+print listaIntensidades
 
 #print sys.argv[1]
 #print sys.argv[2]
