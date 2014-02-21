@@ -57,11 +57,16 @@ def funcionDetencionYReanudacion(counter, filename2, img2):
 
 #Esta funcion es la que se llama al dibujar figuras (poligonos)
 def draw_lines(event, x, y, flags, param):
+    #Recordar que aqui "param" representa a la imagen o frame que se esta procesando
     global generalList, specificList
     global ix,iy,drawing#,mode
     #Click inicial
-
     if event == cv2.EVENT_LBUTTONDOWN:
+        #En este primer punto de contacto, se lleva a cabo un rotulado del poligono
+        #a dibujar... se rotula con len(listadoFilesLazos[counter-2])
+        fontSCR = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(param,str(len(generalList)),(x,y), fontSCR, 1,(255,255,255),2,2)
+
         specificList=[]
         bufferArray=[x,y]
         specificList.append(bufferArray)
@@ -154,9 +159,14 @@ def procesado(filename):
         #img = cv2.cvtColor(frame, 0)
         #Dibujado de poligonos... (si es que los hay)... hay que recordar que generalList
         #es una lista que contiene listas, y cada una de esas listas interas es un conjunto
-        #de puntos asociados a un poligono anteriormente dibujado
+        #de puntos asociados a un poligono anteriormente dibujado... tambien se hace un
+        #rotulado de los poligonos
+        cntROTULADO=0
         for x in generalList:
+            fontSCR = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(img,str(cntROTULADO),generalList[cntROTULADO][0], fontSCR, 1,(255,255,255),2,2)
             cv2.polylines(img,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
+            cntROTULADO+=1
         #print type(img)
         #print filename
         cv2.namedWindow(filename)
