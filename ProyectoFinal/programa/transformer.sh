@@ -1,11 +1,22 @@
 #!/bin/bash
 
+#----------------------------------------------------------------
+#Algunas configuraciones
+userD="gustavo"
+currentDir=`pwd`
+cd /home/$userD/
+git clone https://github.com/Gustavroot/LEEDcicima.git
+#cd LEEDcicima
+#git pull origin master
+cd $currentDir
+#-------------------------------------------------------------------------
+
 #Resolucion recomendada: 1280x710, para Acer Aspire 14 pulgadas
 #640x480
 resolucion=1280x710
 
 #Specify ffmpeg PATH
-ffmpegPATH=/home/gustavo/Downloads/src0/ffmpeg-0.11.1/ffmpeg
+ffmpegPATH=/home/$userD/Downloads/src0/ffmpeg-0.11.1/ffmpeg
 
 directVideos=../videos/
 transformedPath=../videos/transf/
@@ -40,3 +51,8 @@ echo ""
 echo "Transformaciones finalizadas..."
 
 #echo ${arrayList[0]}
+
+#----------------------------------------------------------------
+#Algunas configuraciones
+sudo aptitude install gnuplot
+#-------------------------------------------------------------------------

@@ -217,7 +217,7 @@ def procesado(filename):
         cntROTULADO+=1
     cv2.line(img2D,(0,tmpFrame.shape[0]/2),(tmpFrame.shape[1],tmpFrame.shape[0]/2),(255,0,0),5)
     cv2.line(img2D,(tmpFrame.shape[1]/2,0),(tmpFrame.shape[1]/2,tmpFrame.shape[0]),(255,0,0),5)
-    cv2.imwrite('RESULTS/2D_'+str(counter-2)+'_'+filename+'.png',img2D)
+    cv2.imwrite('RESULTS/TwoDim/2D_'+str(counter-2)+'_'+filename+'.png',img2D)
     #Ademas, hay que etiquetar el sistema de coordenadas... aqui esta PENDIENTE encontrar
     #los centros de los poligonos, para rotular esto... ademas, hace falta hacer un rotulado
     #del sistema coordenado
@@ -255,6 +255,11 @@ for elem in sys.argv:
 
 #print len(listadoFilesLazos)
 print listaIntensidades
+
+
+#Hay que llevar a cabo un guardado adecuado de la informacion en listaIntensidades... todo
+#eso se guardara en archivos .txt
+
 
 #print sys.argv[1]
 #print sys.argv[2]
