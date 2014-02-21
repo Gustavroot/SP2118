@@ -72,7 +72,7 @@ def draw_lines(event, x, y, flags, param):
         specificList.append(bufferArray)
         drawing = True
         ix,iy = x,y
-        print param[y,x]
+        #print param[y,x]
     #Arrastrado del mouse
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
@@ -128,10 +128,10 @@ def procesado(filename):
     #y la idea es no cambiar esto, para luego hacer una comparacion del tipo de
     #este frame, con el tipo del frame que si va cambiando, esto para la detencion
     #del while...
-    print sys.argv[1]+filename
+    #print sys.argv[1]+filename
     tmpVideo = cv2.VideoCapture(sys.argv[1]+filename)
     if not tmpVideo:
-        print "SE ARMO"
+        print "Falla en extraccion de video..."
     tmpRet, tmpFrame=tmpVideo.read()
     #Extraccion del archivo video
     cap = cv2.VideoCapture(sys.argv[1]+filename)
@@ -140,7 +140,7 @@ def procesado(filename):
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
     counterFrames=1
     while True:
-        print counterFrames
+        #print counterFrames
         estadoFinal="sin interrumpir"
         #Extraccion del frame
         ret, frame = cap.read()
@@ -253,7 +253,7 @@ for elem in sys.argv:
         procesado(sys.argv[counter])
     counter+=1
 
-print len(listadoFilesLazos)
+#print len(listadoFilesLazos)
 print listaIntensidades
 
 #print sys.argv[1]
