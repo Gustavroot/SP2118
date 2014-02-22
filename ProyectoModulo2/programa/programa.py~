@@ -10,13 +10,12 @@ from visual import *
 #Esta funcion dibuja un "poligono" triangular...
 def dibujadoTriangulo(tripletePuntos,radioCilindros2):
     #bla=2
-    segm=10
+    segm=4
     for counter in range(0,segm):
         puntoUNO=tripletePuntos[1]+(tripletePuntos[0]-tripletePuntos[1])*(float(counter)/float(segm))
-        puntoDOS=tripletePuntos[2]+(tripletePuntos[0]-tripletePuntos[2])*(counter/segm)
+        puntoDOS=tripletePuntos[2]+(tripletePuntos[0]-tripletePuntos[2])*(float(counter)/float(segm))
         cylinder(pos=puntoDOS, axis=(puntoUNO-puntoDOS), radius=radioCilindros2)
         #cylinder(pos=tripletePuntos[2], axis=(tripletePuntos[1]-tripletePuntos[2]), radius=radioCilindros2)
-    
 
 #Esta funcion dibuja un segmento unidad del cuadriculado...
 def dibujadoUnidadCuadriculado(cuadrupletePuntos,radioCilindros1):
@@ -35,6 +34,7 @@ def dibujadoSURFACE(arrayPuntos):
     #Se grafica la funcion obtenida a traves del metodo de difs finitas...
     counterTMP2=0
     #print len(arrayRESULT)
+    #Esta lista contendra todos los objetos esfera, agregados como puntos de la grilla
     listVertexs=[]
     #print len(arrayPuntos)
     for counterTMP in range(0,len(arrayPuntos)):
@@ -47,7 +47,16 @@ def dibujadoSURFACE(arrayPuntos):
         listVertexs.append(sphereBuffer)
         #print counterTMP2
     #Llamado a funcion dibujado unidad cuadricula...
-    dibujadoUnidadCuadriculado([listVertexs[0].pos,listVertexs[1].pos,listVertexs[int(stepN+1)].pos,listVertexs[int(stepN+2)].pos],radioPuntosRESULT)
+    #dibujadoUnidadCuadriculado([listVertexs[0].pos,listVertexs[1].pos,listVertexs[int(stepN+1)].pos,listVertexs[int(stepN+2)].pos],radioPuntosRESULT)
+    #dibujadoUnidadCuadriculado([listVertexs[int(stepN+1)].pos,listVertexs[int(stepN+2)].pos,listVertexs[int(2*stepN+2)].pos,listVertexs[int(2*stepN+3)].pos],radioPuntosRESULT)
+
+    #Ahora se procede a iterar sobre todos los cuadrupletes de la grilla
+    for cntr2 in range(0,int(stepM)):
+        for cntr in range(0,int(stepN)):
+            bla=3
+            #dibujadoUnidadCuadriculado([listVertexs[cntr2*int(stepN+1)+cntr].pos,listVertexs[cntr2*int(stepN+1)+cntr+1].pos,listVertexs[cntr2*int(stepN+1)+int(cntr)+int(stepN+1)].pos,listVertexs[cntr2*int(stepN+1)+int(cntr)+int(stepN+2)].pos],radioPuntosRESULT)
+
+
 
 
 """
@@ -78,11 +87,11 @@ def boundaryFunctionD():
 print "------------------------------------------------------------------------"
 print "\nPrograma para la visualizacion de la solucion a la ecuacion de Poisson:\n"
 endpointA=raw_input('Ingrese limite de la izquierda (a default=0): ')
-endpointB=raw_input('Ingrese limite de la derecha (b default=9): ')
+endpointB=raw_input('Ingrese limite de la derecha (b default=6): ')
 endpointC=raw_input('Ingrese limite de arriba (c default=0): ')
-endpointD=raw_input('Ingrese limite de abajo: (d default=4.5): ')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=15): ')
-stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=15): ')
+endpointD=raw_input('Ingrese limite de abajo: (d default=3): ')
+stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=30): ')
+stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=30): ')
 tolerance=raw_input('Ingrese la tolerancia (tol default=0.1): ')
 maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N default=50): ')
 
@@ -97,9 +106,9 @@ if not(endpointC.isdigit()):
 if not(endpointD.isdigit()):
     endpointD=4.5
 if not(stepM.isdigit()):
-    stepM=15.0
+    stepM=150.0
 if not(stepN.isdigit()):
-    stepN=15.0
+    stepN=150.0
 if not(tolerance.isdigit()):
     tolerance=0.1
 if not(maxIterationsN.isdigit()):
@@ -109,7 +118,7 @@ if not(maxIterationsN.isdigit()):
 #los limites superiores y la cantidad de divisiones de los ejes,
 #pero ya hay un limite en N...
 
-print endpointB
+#print endpointB
 
 #Llamado al modulo de C aqui
 print "\nEjecutando resolucion a traves de modulo de C...\n"
@@ -121,20 +130,17 @@ arrayRESULT=modulopoisson.solvepoisson([float(endpointA), float(endpointB), floa
 maxValue=max(arrayRESULT)
 #print maxValue
 
-#Codigo VPython aqui...
-#------------------------------------------------------------------------------------------------
-#Se configura la escena...
-scene2 = display(title='Ecuacion de Poisson', center=(0.5,0.5,0.5))
-scene2.forward=vector(-0.396691, -0.227749, -0.889251)
+#Se guardan los datos en un archivo, para posterior graficado...
+Xmiarchivo = open('Datos.dat', 'w')
+XpasoX=(float(endpointB)-float(endpointA))/float(stepN)
+XpasoY=(float(endpointD)-float(endpointC))/float(stepM)
+XradioPuntosRESULT=max([XpasoX,XpasoY])/10
+XcounterTMP2=0
+for XcounterTMP in range(0,len(arrayRESULT)):
+    if XcounterTMP%(stepN+1)==0 and XcounterTMP!=0:
+        XcounterTMP2+=1
+    Xmiarchivo.write(str(endpointC+XcounterTMP2*XpasoY)+"    "+str(endpointA+(XcounterTMP-XcounterTMP2*(stepN+1))*XpasoX)+"    "+str(arrayRESULT[XcounterTMP])+"\n")
 
-#Se configuran los ejes coordenados
-ejeY=box(size=vector(maxValue/20,maxValue*8,maxValue/20),color=color.green)
-ejeX=box(size=vector(endpointB*2.1,maxValue/20,maxValue/20),color=color.green)
-ejeZ=box(size=vector(maxValue/20,maxValue/20,endpointD*2.1),color=color.green)
-
-#sphere(pos=vector(-1,0,0), radius=radioPuntosRESULT, color=color.white)
-
-#fourSidesFigure=Polygon([(0,0),(8,0.7),(4,0.7)])
 
 #Se hace un llamado al dibujado de superficie...
-dibujadoSURFACE(arrayRESULT)
+#dibujadoSURFACE(arrayRESULT)

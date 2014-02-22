@@ -1,0 +1,11 @@
+set isosamples 40
+unset key
+set title "Solution Poisson"
+#set xrange [-4:4]
+#set yrange [-4:4]
+set ztics 1
+splot 'Datos.dat' with lines
+#set view 29,53 #Done implicitly by mousing.
+set term pngcairo mono enhanced
+set out 'SolutionPoisson.png'
+replot

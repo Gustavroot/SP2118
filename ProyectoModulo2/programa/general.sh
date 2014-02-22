@@ -8,4 +8,6 @@ sudo python setup.py install
 
 ./programa.py
 
+gnuplot scriptGNUPLOT
+
 #echo "eso"
