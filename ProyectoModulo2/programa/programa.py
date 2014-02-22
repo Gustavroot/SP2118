@@ -4,9 +4,14 @@
 #import math
 import modulopoisson
 from visual import *
+from math import cos, sin
 
 
 #Definiciones de funciones aqui
+#Solucion analitica de la ED, en caso de que se conozca
+def solucionAnalitica(x,y):
+    return -cos(x)*sin(y)
+
 #Esta funcion dibuja un "poligono" triangular...
 def dibujadoTriangulo(tripletePuntos,radioCilindros2):
     #bla=2
@@ -147,7 +152,7 @@ maxValue=max(arrayRESULT)
 Xmiarchivo = open('Datos.dat', 'w')
 XpasoX=(float(endpointB)-float(endpointA))/float(stepN)
 XpasoY=(float(endpointD)-float(endpointC))/float(stepM)
-XradioPuntosRESULT=max([XpasoX,XpasoY])/10
+#XradioPuntosRESULT=max([XpasoX,XpasoY])/10
 XcounterTMP2=0
 for XcounterTMP in range(0,len(arrayRESULT)):
     if XcounterTMP%(stepN+1)==0 and XcounterTMP!=0:
@@ -157,3 +162,16 @@ for XcounterTMP in range(0,len(arrayRESULT)):
 
 #Se hace un llamado al dibujado de superficie...
 #dibujadoSURFACE(arrayRESULT)
+
+#Ahora se lleva a cabo una comparacion con la solucion analitica
+#Para esto, se genera primero una grilla con los valores de la funcion analitica
+listGrillaAnalitica=[]
+Xmiarchivo2=open('DatosAnaliticos.dat','w')
+XcounterTMP2=0
+for XcounterTMP in range(0,len(arrayRESULT)):
+    if XcounterTMP%(stepN+1)==0 and XcounterTMP!=0:
+        XcounterTMP2+=1
+    listGrillaAnalitica.append(solucionAnalitica(endpointA+(XcounterTMP-XcounterTMP2*(stepN+1))*XpasoX,endpointC+XcounterTMP2*XpasoY))
+    Xmiarchivo2.write(str(endpointC+XcounterTMP2*XpasoY)+"    "+str(endpointA+(XcounterTMP-XcounterTMP2*(stepN+1))*XpasoX)+"    "+str(listGrillaAnalitica[XcounterTMP])+"\n")
+
+

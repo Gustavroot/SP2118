@@ -187,6 +187,8 @@ Puesto que en VPython no hay un dibujador de superficies, o por lo menos no uno 
 
 Para esto, se hizo uso de cilindros, y con ellos se dibujaron triángulos, y con ellos se permeó toda la superficie. Puesto que es más fácil iterar sobre cuadrados en una cuadrícula que sobre triángulos en una cuadrícula, entonces se anidaron dos funciones, la primera recibe un cuadrado, y la segunda un triángulo, y esta última es la que lleva a cabo el dibujado del polígono. Después, simplemente basta con iterar sobre todos los cuadrupletes de la grilla, tomando en cuenta superposición de puntos para cuadrupletes adyacentes.
 
+Pero el dibujado de superficies, llevado a cabo de la  manera anteriormente descrita, no resulta ser muy eficiente, por lo que se optó por emplear gnuplot para el graficado de los puntos obtenidos, para llevar a cabo comparaciones visuales entre los resultados numéricos y la solución analítica (en caso de disponer de esta).
+
 
 
 
