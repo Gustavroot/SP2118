@@ -9,7 +9,14 @@ from visual import *
 #Definiciones de funciones aqui
 #Esta funcion dibuja un "poligono" triangular...
 def dibujadoTriangulo(tripletePuntos,radioCilindros2):
-    bla=2
+    #bla=2
+    segm=10
+    for counter in range(0,segm):
+        puntoUNO=tripletePuntos[1]+(tripletePuntos[0]-tripletePuntos[1])*(float(counter)/float(segm))
+        puntoDOS=tripletePuntos[2]+(tripletePuntos[0]-tripletePuntos[2])*(float(counter)/float(segm))
+        cylinder(pos=puntoDOS, axis=(puntoUNO-puntoDOS), radius=radioCilindros2)
+        #cylinder(pos=tripletePuntos[2], axis=(tripletePuntos[1]-tripletePuntos[2]), radius=radioCilindros2)
+    
 
 #Esta funcion dibuja un segmento unidad del cuadriculado...
 def dibujadoUnidadCuadriculado(cuadrupletePuntos,radioCilindros1):

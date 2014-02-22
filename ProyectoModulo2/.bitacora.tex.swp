@@ -183,7 +183,9 @@ Para llevar a cabo una instalación de VPython, es necesario hacer la descarga d
 
 \section{Comparación de resultados con la solución conocida:}
 
+Puesto que en VPython no hay un dibujador de superficies, o por lo menos no uno simple, entonces procedió a crear uno en este programa.
 
+Para esto, se hizo uso de cilindros, y con ellos se dibujaron triángulos, y con ellos se permeó toda la superficie. Puesto que es más fácil iterar sobre cuadrados en una cuadrícula que sobre triángulos en una cuadrícula, entonces se anidaron dos funciones, la primera recibe un cuadrado, y la segunda un triángulo, y esta última es la que lleva a cabo el dibujado del polígono. Después, simplemente basta con iterar sobre todos los cuadrupletes de la grilla, tomando en cuenta superposición de puntos para cuadrupletes adyacentes.
 
 
 
