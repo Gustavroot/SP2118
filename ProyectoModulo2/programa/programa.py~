@@ -5,7 +5,43 @@
 import modulopoisson
 from visual import *
 
+
 #Definiciones de funciones aqui
+#Esta funcion dibuja un "poligono" triangular...
+def dibujadoTriangulo(tripletePuntos,radioCilindros2):
+    bla=2
+
+#Esta funcion dibuja un segmento unidad del cuadriculado...
+def dibujadoUnidadCuadriculado(cuadrupletePuntos,radioCilindros1):
+   #bla=1
+   dibujadoTriangulo([cuadrupletePuntos[0],cuadrupletePuntos[1],cuadrupletePuntos[2]],radioCilindros1)
+   dibujadoTriangulo([cuadrupletePuntos[1],cuadrupletePuntos[2],cuadrupletePuntos[3]],radioCilindros1)
+
+#Esta funcion dibuja una superficie, a partir de un conjunto de puntos...
+def dibujadoSURFACE(arrayPuntos):
+    #Se toma el valor maximo entre los dos pasos, y una quinta parte de ese sera el radio
+    #de las esferas
+    pasoX=(float(endpointB)-float(endpointA))/float(stepN)
+    pasoY=(float(endpointD)-float(endpointC))/float(stepM)
+    radioPuntosRESULT=max([pasoX,pasoY])/10
+    
+    #Se grafica la funcion obtenida a traves del metodo de difs finitas...
+    counterTMP2=0
+    #print len(arrayRESULT)
+    listVertexs=[]
+    print len(arrayPuntos)
+    for counterTMP in range(0,len(arrayPuntos)):
+        #bla=2
+        #print pasoX
+        #print counterTMP%stepN
+        #print endpointA+(counterTMP-counterTMP2*(stepN+1))*pasoX
+        if counterTMP%(stepN+1)==0 and counterTMP!=0:
+            counterTMP2+=1
+        sphereBuffer=sphere(pos=vector(endpointC+counterTMP2*pasoY,arrayPuntos[counterTMP],endpointA+(counterTMP-counterTMP2*(stepN+1))*pasoX), radius=radioPuntosRESULT, color=color.white)
+        listVertexs.append(sphereBuffer)
+        #print counterTMP2
+    #Llamado a funcion dibujado unidad cuadricula...
+    dibujadoUnidadCuadriculado([listVertexs[0].pos,listVertexs[1].pos,listVertexs[int(stepN+1)].pos,listVertexs[int(stepN+2)].pos],radioPuntosRESULT)
 
 
 """
@@ -90,27 +126,9 @@ ejeY=box(size=vector(maxValue/20,maxValue*8,maxValue/20),color=color.green)
 ejeX=box(size=vector(endpointB*2.1,maxValue/20,maxValue/20),color=color.green)
 ejeZ=box(size=vector(maxValue/20,maxValue/20,endpointD*2.1),color=color.green)
 
-#Se toma el valor maximo entre los dos pasos, y una quinta parte de ese sera el radio
-#de las esferas
-pasoX=(float(endpointB)-float(endpointA))/float(stepN)
-pasoY=(float(endpointD)-float(endpointC))/float(stepM)
-radioPuntosRESULT=max([pasoX,pasoY])/10
-
-#Se grafica la funcion obtenida a traves del metodo de difs finitas...
-
-#Se grafica la funcion obtenida a traves del metodo de difs finitas...
-counterTMP2=0
-#print len(arrayRESULT)
-for counterTMP in range(0,len(arrayRESULT)):
-    #bla=2
-    #print pasoX
-    #print counterTMP%stepN
-    if counterTMP%stepN==0 and counterTMP!=0:
-        counterTMP2+=1
-    #print endpointA+(counterTMP-counterTMP2*(stepN+1))*pasoX
-    sphere(pos=vector(endpointA+(counterTMP-counterTMP2*stepN)*pasoX,arrayRESULT[counterTMP],endpointC+counterTMP2*pasoY), radius=radioPuntosRESULT, color=color.white)
 #sphere(pos=vector(-1,0,0), radius=radioPuntosRESULT, color=color.white)
 
-fourSidesFigure=Polygon([(0,0),(8,0.7),(4,0.7)])
+#fourSidesFigure=Polygon([(0,0),(8,0.7),(4,0.7)])
 
-
+#Se hace un llamado al dibujado de superficie...
+dibujadoSURFACE(arrayRESULT)
