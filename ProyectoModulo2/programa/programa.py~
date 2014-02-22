@@ -55,13 +55,13 @@ if not(endpointC.isdigit()):
 if not(endpointD.isdigit()):
     endpointD=4.5
 if not(stepM.isdigit()):
-    stepM=15
+    stepM=15.0
 if not(stepN.isdigit()):
-    stepN=15
+    stepN=15.0
 if not(tolerance.isdigit()):
     tolerance=0.1
 if not(maxIterationsN.isdigit()):
-    maxIterationsN=50
+    maxIterationsN=50.0
 
 #Seria bueno agregar un verificado de la conmensurabilidad entre
 #los limites superiores y la cantidad de divisiones de los ejes,
@@ -94,7 +94,7 @@ ejeZ=box(size=vector(maxValue/20,maxValue/20,endpointD*2.1),color=color.green)
 #de las esferas
 pasoX=(float(endpointB)-float(endpointA))/float(stepN)
 pasoY=(float(endpointD)-float(endpointC))/float(stepM)
-radioPuntosRESULT=max([pasoX,pasoY])/5
+radioPuntosRESULT=max([pasoX,pasoY])/10
 
 #Se grafica la funcion obtenida a traves del metodo de difs finitas...
 
@@ -111,5 +111,6 @@ for counterTMP in range(0,len(arrayRESULT)):
     sphere(pos=vector(endpointA+(counterTMP-counterTMP2*stepN)*pasoX,arrayRESULT[counterTMP],endpointC+counterTMP2*pasoY), radius=radioPuntosRESULT, color=color.white)
 #sphere(pos=vector(-1,0,0), radius=radioPuntosRESULT, color=color.white)
 
+fourSidesFigure=Polygon([(0,0),(8,0.7),(4,0.7)])
 
 

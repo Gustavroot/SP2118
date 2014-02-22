@@ -55,13 +55,13 @@ if not(endpointC.isdigit()):
 if not(endpointD.isdigit()):
     endpointD=4.5
 if not(stepM.isdigit()):
-    stepM=15
+    stepM=15.0
 if not(stepN.isdigit()):
-    stepN=15
+    stepN=15.0
 if not(tolerance.isdigit()):
     tolerance=0.1
 if not(maxIterationsN.isdigit()):
-    maxIterationsN=50
+    maxIterationsN=50.0
 
 #Seria bueno agregar un verificado de la conmensurabilidad entre
 #los limites superiores y la cantidad de divisiones de los ejes,
@@ -111,5 +111,6 @@ for counterTMP in range(0,len(arrayRESULT)):
     sphere(pos=vector(endpointA+(counterTMP-counterTMP2*stepN)*pasoX,arrayRESULT[counterTMP],endpointC+counterTMP2*pasoY), radius=radioPuntosRESULT, color=color.white)
 #sphere(pos=vector(-1,0,0), radius=radioPuntosRESULT, color=color.white)
 
+fourSidesFigure=Polygon([(0,0),(8,0.7),(4,0.7)])
 
 
