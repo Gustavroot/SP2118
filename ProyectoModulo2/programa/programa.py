@@ -31,7 +31,6 @@ def dibujadoSURFACE(arrayPuntos):
     listVertexs=[]
     #print len(arrayPuntos)
     for counterTMP in range(0,len(arrayPuntos)):
-        #bla=2
         #print pasoX
         #print counterTMP%stepN
         #print endpointA+(counterTMP-counterTMP2*(stepN+1))*pasoX
