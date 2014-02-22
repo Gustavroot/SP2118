@@ -3,6 +3,7 @@
 #Importaciones aqui
 #import math
 import modulopoisson
+from visual import *
 
 #Definiciones de funciones aqui
 
@@ -48,7 +49,7 @@ maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N default=50)
 if not(endpointA.isdigit()):
     endpointA=0
 if not(endpointB.isdigit()):
-    endpointB=9
+    endpointB=9.0
 if not(endpointC.isdigit()):
     endpointC=0
 if not(endpointD.isdigit()):
@@ -66,6 +67,7 @@ if not(maxIterationsN.isdigit()):
 #los limites superiores y la cantidad de divisiones de los ejes,
 #pero ya hay un limite en N...
 
+print endpointB
 
 #Llamado al modulo de C aqui
 print "\nEjecutando resolucion a traves de modulo de C...\n"
@@ -73,7 +75,41 @@ arrayRESULT=modulopoisson.solvepoisson([float(endpointA), float(endpointB), floa
 #print "RESULTADO: "+str(arrayRESULT)
 #print len(arrayRESULT)
 
+#Se obtiene el valor maximo en el array de resultados, para setear el eje y
+maxValue=max(arrayRESULT)
+#print maxValue
 
-#Codigo pesado aqui... VPython
+#Codigo VPython aqui...
+#------------------------------------------------------------------------------------------------
+#Se configura la escena...
+scene2 = display(title='Ecuacion de Poisson', center=(0.5,0.5,0.5))
+scene2.forward=vector(-0.396691, -0.227749, -0.889251)
+
+#Se configuran los ejes coordenados
+ejeY=box(size=vector(maxValue/20,maxValue*8,maxValue/20),color=color.green)
+ejeX=box(size=vector(endpointB*2.1,maxValue/20,maxValue/20),color=color.green)
+ejeZ=box(size=vector(maxValue/20,maxValue/20,endpointD*2.1),color=color.green)
+
+#Se toma el valor maximo entre los dos pasos, y una quinta parte de ese sera el radio
+#de las esferas
+pasoX=(float(endpointB)-float(endpointA))/float(stepN)
+pasoY=(float(endpointD)-float(endpointC))/float(stepM)
+radioPuntosRESULT=max([pasoX,pasoY])/5
+
+#Se grafica la funcion obtenida a traves del metodo de difs finitas...
+
+#Se grafica la funcion obtenida a traves del metodo de difs finitas...
+counterTMP2=0
+#print len(arrayRESULT)
+for counterTMP in range(0,len(arrayRESULT)):
+    #bla=2
+    #print pasoX
+    #print counterTMP%stepN
+    if counterTMP%stepN==0 and counterTMP!=0:
+        counterTMP2+=1
+    #print endpointA+(counterTMP-counterTMP2*(stepN+1))*pasoX
+    sphere(pos=vector(endpointA+(counterTMP-counterTMP2*stepN)*pasoX,arrayRESULT[counterTMP],endpointC+counterTMP2*pasoY), radius=radioPuntosRESULT, color=color.white)
+#sphere(pos=vector(-1,0,0), radius=radioPuntosRESULT, color=color.white)
+
 
 

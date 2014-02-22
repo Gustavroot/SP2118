@@ -166,10 +166,23 @@ Hay que tener el cuidado de llenar de ceros el arreglo solicitado con malloc, pu
 
 \section{Sobre VPython:}
 
+Para llevar a cabo una instalación de VPython, es necesario hacer la descarga de dicha biblioteca, y se puede elegir entre código fuente y binario, esto en la página oficial de VPython\footnote{http://vpython.org/contents/download\_linux.html}. Una vez instalado, el uso es bastante simple, pero vale la pena estacar algunos puntos importantes:
+
+\begin{itemize}
+\item Lo que se necesita de VPython aquí, es mínimo, por lo que no es mucha la documentación sobre esta biblioteca a la que hay que accesar\footnote{http://www.youtube.com/watch?v=KbOyKOlWBrs}. Simplemente se necesita la creación de esferas, de un radio pequeño, y ubicarlas en los puntos específicos del espacio, dados por el arreglo resultante de valores obtenidos con la resolución de la ecuación de Poisson, a través del módulo de C.
+\item Son pocos los comandos de VPython a utilizar, en este caso:
+\begin{itemize}
+\item from visual import *: se importan todas las herramientas que la biblioteca VPython tiene a disposición.
+\item sphere(): este objeto tridimensional es dibujado con atributos por default. Hay que pasar ciertos parámetros para modificar los atributos de este objeto, o el cambio de los atributos se puede setear posterior a su creación. En el caso de este proyecto, se llevó a cabo el seteado de los atributos al mismo tiempo que la instanciación del objeto.
+\item De la misma forma que la esfera, se pueden crear otros objetos box(), que se emplearon en los ejes en este caso.
+\item También se hicieron varias modificaciones a la escena, y hay mucha documentación al respecto\footnote{http://guigui.developpez.com/cours/python/vpython/en/?page=windowseventfile}$\displaystyle ^{,}$\footnote{http://vpython.org/contents/docs/display.html}, pero básicamente el método empleado fue display(), con los cambios correspondientes a este caso.
+\end{itemize}
+\end{itemize}
 
 
 
-\section{Procedimientos generales:}
+\section{Comparación de resultados con la solución conocida:}
+
 
 
 
