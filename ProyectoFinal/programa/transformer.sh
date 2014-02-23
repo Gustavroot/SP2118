@@ -2,7 +2,7 @@
 
 #----------------------------------------------------------------
 #Algunas configuraciones
-userD="gustavo"
+userD=`whoami`
 currentDir=`pwd`
 cd /home/$userD/
 git clone https://github.com/Gustavroot/LEEDcicima.git

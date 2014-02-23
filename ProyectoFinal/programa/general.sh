@@ -1,7 +1,7 @@
 #!/bin/bash
 
 transformedPath=../videos/transf/
-userD="gustavo"
+userD=`whoami`
 
 #Fecha actual, con identificador unico...
 now=$(date +"%m_%d_%Y")"_"$(date +%s)
@@ -15,7 +15,7 @@ mkdir "RESULTS_$now/Intensidades"
 mv 2D_* "RESULTS_$now/TwoDim"
 mv Datos_* "RESULTS_$now/Intensidades"
 
-#Ahora se procede a generar las grafias con gnuplot...
+#Ahora se procede a generar las graficas con gnuplot...
 stringList=`ls "RESULTS_$now/Intensidades"`
 arrayList=(${stringList//\ / })
 for i in $(ls "RESULTS_$now/Intensidades")
@@ -54,7 +54,7 @@ done
 mv Grafica_* "RESULTS_$now/Intensidades"
 
 
-read -p "¿Desea almacenar la informacion recien procesada? (s o n) " answr
+read -p "¿Desea almacenar la informacion recien procesada (en un repositorio de Github)? (s o n) " answr
 echo ""
 if [ "$answr" == "s" ]
 then
@@ -66,6 +66,7 @@ then
     git commit -m "Analisis computacional de LEED: "$now
     echo "Si se le pide un usuario y la correspondiente contraseña a continuacion, es la informacion de su usuario de Github:"
     git push origin master
+    echo "En caso de haber fallado el ingreso de contraseña de su usuario de Github, ejecutar el script gitpush.sh, ubicado en el mismo directorio en el que se encuentra este script."
 fi
 
 
