@@ -4,10 +4,35 @@
 #import math
 import modulopoisson
 from visual import *
-from math import cos, sin
+from math import cos, sin, sqrt
 
 
 #Definiciones de funciones aqui
+#Calculo de denominadores en funcion correlacion
+def denominadorCORRL(arrayDatosNUM,avrg):
+    valueDEN=0
+    for intCNRT in range(0,len(arrayDatosNUM)):
+        valueDEN+=(arrayDatosNUM[intCNRT]-avrg)*(arrayDatosNUM[intCNRT]-avrg)
+    return sqrt(valueDEN)
+
+#Calculo del promedio de un conjunto de datos
+def promedioARRAY(arrayDatos):
+    suma=0
+    for intCOUNTER in range(0,len(arrayDatos)):
+        suma+=arrayDatos[intCOUNTER]
+    return suma/float(len(arrayDatos))
+
+#Calculo de la correlacion entre 2 conjuntos de datos
+def correlacionDATOS(array1, array2):
+    promedio1=promedioARRAY(array1)
+    promedio2=promedioARRAY(array2)
+    denominador1=denominadorCORRL(array1,promedio1)
+    denominador2=denominadorCORRL(array2,promedio2)
+    numerador=0
+    for intCOUNTER in range(0,len(array1)):
+        numerador+=(array1[intCOUNTER]-promedio1)*(array2[intCOUNTER]-promedio2)
+    return numerador/(denominador1*denominador2)
+
 #Solucion analitica de la ED, en caso de que se conozca
 def solucionAnalitica(x,y):
     return -cos(x)*sin(y)
@@ -108,8 +133,8 @@ endpointA=raw_input('Ingrese limite de la izquierda (a default=0): ')
 endpointB=raw_input('Ingrese limite de la derecha (b default=6): ')
 endpointC=raw_input('Ingrese limite de arriba (c default=0): ')
 endpointD=raw_input('Ingrese limite de abajo: (d default=3): ')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=30): ')
-stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=30): ')
+stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=15): ')
+stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=15): ')
 tolerance=raw_input('Ingrese la tolerancia (tol default=0.1): ')
 maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N default=50): ')
 
@@ -124,9 +149,9 @@ if not(endpointC.isdigit()):
 if not(endpointD.isdigit()):
     endpointD=4.5
 if not(stepM.isdigit()):
-    stepM=150.0
+    stepM=15.0
 if not(stepN.isdigit()):
-    stepN=150.0
+    stepN=15.0
 if not(tolerance.isdigit()):
     tolerance=0.1
 if not(maxIterationsN.isdigit()):
@@ -174,3 +199,8 @@ for XcounterTMP in range(0,len(arrayRESULT)):
     listGrillaAnalitica.append(solucionAnalitica(endpointA+(XcounterTMP-XcounterTMP2*(stepN+1))*XpasoX,endpointC+XcounterTMP2*XpasoY))
     Xmiarchivo2.write(str(endpointC+XcounterTMP2*XpasoY)+"    "+str(endpointA+(XcounterTMP-XcounterTMP2*(stepN+1))*XpasoX)+"    "+str(listGrillaAnalitica[XcounterTMP])+"\n")
 
+#Comparacion entre la solucion numerica y la analitica, a traves de la correlacion
+correlacionFinal=correlacionDATOS(arrayRESULT,listGrillaAnalitica)
+
+#Se imprime el resultado de la suma de las diferencias cuadradas
+print "Correlacion entre solucion numerica y analitica: "+str(correlacionFinal)+"\n\nFin del programa.\n"
