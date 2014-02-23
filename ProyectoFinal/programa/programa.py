@@ -188,10 +188,18 @@ def procesado(filename):
             #promedio del poligono que representan dichos puntos
             #Una vez obtenido el valor anterior, se inserta en la listaIntensidades (temporalmente se
             #insertara un 1)
+            #Para poder pasar los puntos, necesito generar un numpy array
+            #print cv2.contourArea(np.array(generalList[cnt], np.int32).reshape((-1,1,2)))
+            #Se genera una imagen negra, del tamanho de la imagen original...
+            mask2=np.zeros(img.shape,np.uint8)
+            #se dibuja el contorno sobre esa imagen...
+            cv2.drawContours(mask2,[np.array(generalList[cnt], np.int32).reshape((-1,1,2))],0,255,-1)
+            mean_val = cv2.mean(img,mask = mask2)
+            #print mean_val[0]
             #Se crea la variable, como representacion de lo que luego sera una intensidad...
-            intensidadBuffer=1
+            #intensidadBuffer=1
             for cnt2 in range(0,len(listaIntensidades[counter-2])):
-                listaIntensidades[counter-2][cnt2].append(intensidadBuffer)
+                listaIntensidades[counter-2][cnt2].append(mean_val[0])
         #---------------------------------------------------------------------------------------------------
 
         #cv2.namedWindow(filename,img)
@@ -213,9 +221,15 @@ def procesado(filename):
     #ademas de posiciones en un plano cartesiano
     img2D = np.zeros((tmpFrame.shape[0],tmpFrame.shape[1],3), np.uint8)
     cntROTULADO=0
+    miarchivoCENTROIDES = open('Centroides_'+filename+'.txt', 'w')
     for x in generalList:
         fontSCR = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(img2D,str(cntROTULADO),(generalList[cntROTULADO][0][0],generalList[cntROTULADO][0][1]), fontSCR, 1,(255,255,255),2,2)
+        M = cv2.moments(np.array(x, np.int32).reshape((-1,1,2)))
+        centroid_x = int(M['m10']/M['m00'])
+        centroid_y = int(M['m01']/M['m00'])
+        if x!=generalList[0]:
+            cv2.putText(img2D,str(cntROTULADO)+"-("+str(centroid_x)+","+str(centroid_y)+")",(generalList[cntROTULADO][0][0],generalList[cntROTULADO][0][1]), fontSCR, 1,(255,255,255),2,2)
+            miarchivoCENTROIDES.write(str(cntROTULADO)+"    "+str(centroid_x)+"    "+str(centroid_y)+"\n")
         cv2.polylines(img2D,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
         cntROTULADO+=1
     cv2.line(img2D,(0,tmpFrame.shape[0]/2),(tmpFrame.shape[1],tmpFrame.shape[0]/2),(255,0,0),5)
@@ -257,7 +271,7 @@ for elem in sys.argv:
     counter+=1
 
 #print len(listadoFilesLazos)
-print listaIntensidades
+#print listaIntensidades
 espaciadoTemporalMS=float(espaciadoTemporal)/1000
 #Ahora se procede al guardado de los valores de intensidad en archivos
 for cntAR in range(len(listaIntensidades)):

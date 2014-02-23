@@ -4,7 +4,8 @@ transformedPath=../videos/transf/
 userD=`whoami`
 
 #Fecha actual, con identificador unico...
-now=$(date +"%m_%d_%Y")"_"$(date +%s)
+numSECS=`date +%s`
+now=$(date +"%m_%d_%Y")"_"$numSECS
 
 rm -R RESULTS*
 mkdir "RESULTS_$now"
@@ -14,6 +15,7 @@ mkdir "RESULTS_$now/Intensidades"
 
 mv 2D_* "RESULTS_$now/TwoDim"
 mv Datos_* "RESULTS_$now/Intensidades"
+mv Centroides_* "RESULTS_$now/TwoDim"
 
 #Ahora se procede a generar las graficas con gnuplot...
 stringList=`ls "RESULTS_$now/Intensidades"`
@@ -64,9 +66,15 @@ then
     cp -R $currentDir"/RESULTS_$now" .
     git add -A
     git commit -m "Analisis computacional de LEED: "$now
+    echo ""
     echo "Si se le pide un usuario y la correspondiente contraseña a continuacion, es la informacion de su usuario de Github:"
+    echo ""
     git push origin master
+    echo ""
     echo "En caso de haber fallado el ingreso de contraseña de su usuario de Github, ejecutar el script gitpush.sh, ubicado en el mismo directorio en el que se encuentra este script."
+    echo ""
+    echo "Identificador unico para este analisis realizado (con este identificador se encuentra cual directorio, en el repositorio de Github, contiene los resultados obtenidos): "$numSECS
+    echo ""
 fi
 
 
