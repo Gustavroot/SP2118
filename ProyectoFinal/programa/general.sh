@@ -24,30 +24,38 @@ do
     #echo $fileToProcess
     gnuplot << EOF
     #Ahora se puede hacer gnuplot scripting aqui...
-    set output  "PS_$fileToProcess.ps"
-    set title "Intensidad vs Tiempo"
-    set xlabel "Tiempo"
-    set ylabel "Intensidad"
-    plot "RESULTS_$now/Intensidades/$fileToProcess" using 1:2 with lines
-    #Una vez generado el .ps...
-    set term postscript
-    set output "PS_$fileToProcess.ps"
+    set isosamples 40
+    unset key
+    set title "Intensidad vs tiempo"
+    set ztics 1
+    plot "RESULTS_$now/Intensidades/$fileToProcess" with lines
+    set term pngcairo mono enhanced
+    set out 'Grafica_$fileToProcess.png'
     replot
-    #set term x11
-    #Se genera el png...
-    set term png
-    set output "Grafica_$fileToProcess.png"
-    replot
-    #set term x11
+
+    #set xlabel "Tiempo"
+    #set ylabel "Intensidad"
+    #plot "RESULTS_$now/Intensidades/$fileToProcess" using 1:2 with lines
+    ##Una vez generado el .ps...
+    #set term postscript
+    #set output "PS_$fileToProcess.ps"
+    #replot
+    ##set term x11
+    ##Se genera el png...
+    #set term png
+    #set output "Grafica_$fileToProcess.png"
+    #replot
+    ##set term x11
 EOF
     counter=`expr $counter + 1`
 done
 
-rm PS_*
+#rm PS_*
 mv Grafica_* "RESULTS_$now/Intensidades"
 
 
 read -p "¿Desea almacenar la informacion recien procesada? (s o n) " answr
+echo ""
 if [ "$answr" == "s" ]
 then
     currentDir=`pwd`

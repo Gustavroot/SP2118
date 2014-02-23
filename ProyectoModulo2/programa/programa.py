@@ -35,7 +35,7 @@ def correlacionDATOS(array1, array2):
 
 #Solucion analitica de la ED, en caso de que se conozca
 def solucionAnalitica(x,y):
-    return cos(x)*sin(y)
+    return cos(y)*sin(x)
 
 #Esta funcion dibuja un "poligono" triangular...
 def dibujadoTriangulo(tripletePuntos,radioCilindros2):
