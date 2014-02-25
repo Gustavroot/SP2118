@@ -35,7 +35,7 @@ def correlacionDATOS(array1, array2):
 
 #Solucion analitica de la ED, en caso de que se conozca
 def solucionAnalitica(x,y):
-    return -cos(y)*sin(x)
+    return cos(y)*cos(x)
 
 #Esta funcion dibuja un "poligono" triangular...
 def dibujadoTriangulo(tripletePuntos,radioCilindros2):
@@ -133,8 +133,8 @@ endpointA=raw_input('Ingrese limite de la izquierda (a default=0): ')
 endpointB=raw_input('Ingrese limite de la derecha (b default=6): ')
 endpointC=raw_input('Ingrese limite de arriba (c default=0): ')
 endpointD=raw_input('Ingrese limite de abajo: (d default=3): ')
-stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=15): ')
-stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=15): ')
+stepM=raw_input('Ingrese cantidad de divisiones para el eje y (m default=300): ')
+stepN=raw_input('Ingrese cantidad de divisiones para el eje x (n default=300): ')
 tolerance=raw_input('Ingrese la tolerancia (tol default=0.1): ')
 maxIterationsN=raw_input('Ingrese el numero maximo de iteraciones (N default=50): ')
 
