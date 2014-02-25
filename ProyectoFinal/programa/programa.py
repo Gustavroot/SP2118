@@ -30,6 +30,12 @@ listaIntensidades=[]
 #Est contador se utilizara mas adelante, y se reseteara, para conteo de frames
 counterFrames=1
 
+#Cantidad de frames para rewind...
+numberFramesRewind=20
+
+#El siguiente contador me permite llevar la cuenta de cuantas veces me devuelvo en un video
+#contadorDevolucionFRAMES=0
+
 #img = cv2.imread('/home/gustavo/Desktop/Progra_Verano/GITrepo/ProyectoModulo5/testImgs/Blackeyegalaxy.jpg',0)
 #img=None
 #print "hola"
@@ -39,8 +45,9 @@ counterFrames=1
 #En caso de presionar la letra 'q', se activa esta funcion,
 #la cual detiene el programa para poder dibujar
 #Si se vuelve a presionar 'q', se reanuda
-def funcionDetencionYReanudacion(counter, filename2, img2):
-    #global mode
+def funcionDetencionYReanudacion(counterMAS, filename2, img2):
+    global generalList, listaIntensidades, counterFrames
+    tmpPRT=0
     while(1):
         cv2.imshow(filename2, img2)
         kp=cv2.waitKey(200) & 0xFF
@@ -48,7 +55,47 @@ def funcionDetencionYReanudacion(counter, filename2, img2):
         #    mode = not mode
         if kp==ord('q'): #elif
             print "Reanudado..."
+            tmpPRT=2
             break
+        #El siguiente codigo se ejecuta en caso de devolucion ('r'=rewind)
+        if kp==ord('r'):
+            tmpPRT=1
+            #Tengo que salirme del lazo alguna vez, ya que si no la recursividad no tiene sentido...
+            break
+        #print "r"
+    if tmpPRT==1:
+       #Abro nuevamente el video, ya que quiero tomar el frame al que me voy a devolver
+        tmpVideoBuff = cv2.VideoCapture(sys.argv[1]+filename2)
+        #Tengo que hacer un for para llegar a ese frame...
+        for cntrFrmsBuff in range(0,(counterFrames-numberFramesRewind)):
+            tmpRetBuff, tmpFrameBuff=tmpVideoBuff.read()
+        #Una vez que tengo el frame, extraigo la imagen...
+        imgBuff = cv2.cvtColor(tmpFrameBuff, cv2.COLOR_BGR2GRAY)
+        #Y en ella debo dibujar los poligonos que tenga hasta el momento...
+        cntROTULADO=0
+        for x in generalList:
+            fontSCR = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(imgBuff,str(cntROTULADO),(generalList[cntROTULADO][0][0],generalList[cntROTULADO][0][1]), fontSCR, 1,(255,255,255),2,2)
+            cv2.polylines(imgBuff,[np.array(x, np.int32).reshape((-1,1,2))],True,(255,0,0))
+            cntROTULADO+=1
+        #Termino de configurar algunos detalles para poder desplegar el frame al que me devolvi...
+        cv2.namedWindow(filename2)
+        cv2.setMouseCallback(filename2,draw_lines, imgBuff)
+        cv2.imshow(filename2, imgBuff)
+        #Por ultimo, se eliminan los elementos de listaIntensidades que ya no son necesarios...
+        for cntrPOL in range(0,len(listaIntensidades[counter-2])):
+            for cntBORR in range(0,numberFramesRewind):
+                listaIntensidades[counter-2][cntrPOL].pop()
+        #Puesto que me estoy devolviendo numerFramesRewind cantidad de frames:
+        counterFrames-=numberFramesRewind
+        #contadorDevolucionFRAMES+=1
+        #Y debo hacer un llamado, de manera recursiva, a esta funcion de detencion,
+        #ya que hay que seguir desplegando la img, y ademas puede que quiera devolverme
+        #todavia mas en el video
+        filename3=filename2
+        funcionDetencionYReanudacion(0, filename3, imgBuff)
+    #if tmpPRT==2:
+    #    procesado(sys.argv[counter], counterFrames)
     '''
     if cv2.waitKey(200) & 0xFF != ord('q'):
         cv2.imshow(filename2, img2)
@@ -142,11 +189,19 @@ def procesado(filename):
     #cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280)
     #cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1024)
     counterFrames=1
+    devolucionFRAMES=0
     while True:
         #print counterFrames
         estadoFinal="sin interrumpir"
         #Extraccion del frame
-        ret, frame = cap.read()
+        if devolucionFRAMES==1:
+            cap = cv2.VideoCapture(sys.argv[1]+filename)
+            for x in range(0,counterFrames):
+                ret, frame = cap.read()
+            devolucionFRAMES=0
+            #contadorDevolucionFRAMES=0
+        else:
+            ret, frame = cap.read()
         #Setting width and height
         #... pending!
         #Lo que se mencionaba antes... en caso de no tener el tipo adecuado el frame
@@ -198,8 +253,13 @@ def procesado(filename):
             #print mean_val[0]
             #Se crea la variable, como representacion de lo que luego sera una intensidad...
             #intensidadBuffer=1
-            for cnt2 in range(0,len(listaIntensidades[counter-2])):
-                listaIntensidades[counter-2][cnt2].append(mean_val[0])
+            #LO QUE ESTA ESCRITO A CONTINUACION ES UNA CABALLADA...!!
+            #---------------------------------------------------------------
+            #for cnt2 in range(0,len(listaIntensidades[counter-2])):
+            #    listaIntensidades[counter-2][cnt2].append(mean_val[0])
+            #---------------------------------------------------------------
+            #Esto es lo correcto...
+            listaIntensidades[counter-2][cnt].append(mean_val[0])
         #---------------------------------------------------------------------------------------------------
 
         #cv2.namedWindow(filename,img)
@@ -208,7 +268,12 @@ def procesado(filename):
         if keyFinger == ord('q'):
             #Cuando se presiona la tecla q, se detiene hasta que se vuelva a presionar dicha letra
             print "Detenido..."
+            counterFramesBefore=counterFrames
             funcionDetencionYReanudacion(0, filename, img)
+            counterFramesAfter=counterFrames
+            #En caso de que el contador de frames haya cambiado, hay q atrasar el video...
+            if counterFramesBefore!=counterFramesAfter:
+                devolucionFRAMES=1
             #keyFinger = cv2.waitKey(0) & 0xFF
             #if keyFinger == ord('q'):
             #    continue
